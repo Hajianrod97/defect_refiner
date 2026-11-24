@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.langgraph_api/
+.env
+runs/
+defect_candidates.json
+open_bugs.json

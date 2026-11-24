@@ -1,0 +1,38 @@
+[project]
+name = "defectrefiner"
+version = "0.1.0"
+description = "AI refinement for bug reports: a bug report in, a reviewed ticket out"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.165.0",
+    "httpx>=0.28.1",
+    "langchain-anthropic>=1.7.10",
+    "langchain-ollama>=1.1.0",
+    "langgraph>=1.2.22",
+    "markdown-it-py>=4.3.0",
+    "pydantic>=2.14.3",
+    "uvicorn>=0.54.0",
+]
+
+[tool.uv]
+package = false  # run from the checkout; nothing is built or published
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]  # pycodestyle, pyflakes, import order, bugbear, pyupgrade
+ignore = ["E501"]  # long lines are mostly prompt text, which reads better unwrapped
+
+[dependency-groups]
+dev = [
+    "langgraph-cli[inmem]>=0.4.43",
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
