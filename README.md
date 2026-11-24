@@ -8,15 +8,10 @@ AI refinement for bug reports. A bug report goes in; a ticket a developer can pi
 
 ## How it works
 
-```
-code discovery agent ──┐
-                       ├──> test planner ──> draft ticket ──> human review
-testing agent ─────────┘
-```
+<img src="docs/images/studio.png" alt="The pipeline in LangGraph Studio" width="380">
 
 The code discovery agent reads the code to find the cause. At the same time, the testing agent reads the tests to find where this bug's test belongs and what to reuse. The test planner joins the two, and a template writes a draft ticket. A person then approves, edits or rejects each draft, and every decision is logged.
 
-<img src="docs/images/studio.png" alt="The pipeline in LangGraph Studio" width="380">
 
 *The pipeline in LangGraph Studio: `investigator` is the code discovery agent and `test_scout` the testing agent, running in parallel.*
 
