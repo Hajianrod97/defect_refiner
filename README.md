@@ -16,6 +16,10 @@ testing agent ─────────┘
 
 The code discovery agent reads the code to find the cause. At the same time, the testing agent reads the tests to find where this bug's test belongs and what to reuse. The test planner joins the two, and a template writes a draft ticket. A person then approves, edits or rejects each draft, and every decision is logged.
 
+<img src="docs/images/studio.png" alt="The pipeline in LangGraph Studio" width="380">
+
+*The pipeline in LangGraph Studio: `investigator` is the code discovery agent and `test_scout` the testing agent, running in parallel.*
+
 ## What I found
 
 Tested on 44 closed [datasette](https://github.com/simonw/datasette) bugs. Each agent reads the code from just before the fix, and is scored against the lines the real fix changed. No AI judge.
