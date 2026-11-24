@@ -1,0 +1,504 @@
+[
+  {
+    "id": "ds-36",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "date, year, month and day querystring lookups",
+    "body": "Follow on from #23",
+    "created_at": "2017-10-25T04:23:45Z",
+    "url": "https://github.com/simonw/datasette/issues/36",
+    "reference": [
+      "`?timestamp___date=2017-07-17` - return every item where the timestamp falls on that date",
+      "`?timestamp___year=2017` - return every item where the timestamp falls within 2017",
+      "`?timestamp___month=1` - return every item where the month component is January",
+      "`?timestamp___day=10` - return every item where the day-of-the-month component is 10"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-44",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "?_group_count=country - return counts by specific column(s)",
+    "body": "Imagine if this:\r\n\r\nhttps://stateless-datasets-jykibytogk.now.sh/flights-07d1283/airports.jsono?country__contains=gu&_group_count=country\r\n\r\nTurned into this:\r\n\r\nhttps://stateless-datasets-jykibytogk.now.sh/flights-07d1283?sql=select%20country,%20count(*)%20as%20group_count_country%20from%20airports%20where%20country%20like%20%27%gu%%27%20group%20by%20country%20order%20by%20group_count_country%20desc\r\n\r\nThis would involve introducing a new precedent of query string arguments that start with an _ having special meanings. While we're at it, could try adding _fields=x,y,z\r\n\r\nTasks:",
+    "created_at": "2017-10-30T19:50:32Z",
+    "url": "https://github.com/simonw/datasette/issues/44",
+    "reference": [
+      "Get initial version working",
+      "Refactor code to not just \"pretend to be a view\"",
+      "Get foreign key relationships expanded"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-61",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Common header and footer",
+    "body": "Split from #16",
+    "created_at": "2017-11-11T20:20:08Z",
+    "url": "https://github.com/simonw/datasette/issues/61",
+    "reference": [
+      "A link to the homepage from some kind of navigation bar in the header",
+      "link to github.com/simonw/datasette in the footer",
+      "Slightly better titles (maybe ditch the visited link colours for titles only? should keep those for primary key links)"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-71",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Set up some example datasets on a Cloudflare-backed domain",
+    "body": "To better demonstrate the caching and HTTP/2 features, I'd like to go live with some demos that are hosted behind Cloudflare.",
+    "created_at": "2017-11-13T00:06:30Z",
+    "url": "https://github.com/simonw/datasette/issues/71",
+    "reference": [
+      "Redirect https://datasettes.com/ and https://www.datasettes.com/ to https://github.com/simonw/datasette",
+      "Have `now domain add -e datasettes.com` run without errors (hopefully just a matter of waiting for the DNS to update)",
+      "Alias an example dataset hosted on Now on a datasettes.com subdomain",
+      "Confirm that HTTP caching and HTTP/2 redirect pushing works as expected - this may require another page rule"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-79",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Add more detailed API documentation to the README",
+    "body": "Need to document:",
+    "created_at": "2017-11-13T20:36:21Z",
+    "url": "https://github.com/simonw/datasette/issues/79",
+    "reference": [
+      "The ?column__gt=4 style filter arguments for tables",
+      "The ?sql= API, and how named parameters work",
+      "How API pagination works",
+      "How redirects and cache headers work"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-85",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Detect foreign keys and use them to link HTML pages together",
+    "body": "https://stackoverflow.com/a/44430157/6083 documents the PRAGMA needed to extract foreign key references for a table.\r\n\r\nAt a minimum we can link column values known to be foreign keys to the corresponding row page.\r\nWe could try to summarize the linked row in some way too - somehow extracting a sensible link title, maybe based on additional configuration in the metadata.json file.\r\n\r\nStill todo:",
+    "created_at": "2017-11-14T06:12:05Z",
+    "url": "https://github.com/simonw/datasette/issues/85",
+    "reference": [
+      "Fix it to csvs-to-sqlite refactoring command correctly creates primary key on generated tables",
+      "Ship new csvs-to-sqlite with refactoring command",
+      "Refactor column logic to be more predictable in our templates (the rowid special case)",
+      "Mechanism by which table metadata can specify the \"label\" column for a table",
+      "Automatically set the label column as the first column that isn't a primary key (falling back on primary key)",
+      "Code which runs a \"select id, label from table where id in (...)\" query as part of the tableview and populates a lookup dictionary",
+      "Modify templates to use values from that lookup dictionary"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-131",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "UI support for running FTS searches",
+    "body": "Here's an example query that searches all FTS indexed columns in a table: https://sf-trees-search.now.sh/sf-trees-search-a899b92?sql=select+*+from+Street_Tree_List+where+rowid+in+%28select+rowid+from+Street_Tree_List_fts+where+Street_Tree_List_fts+match+%27grove+london+dpw%27%29%0D%0A\r\n\r\nAnd here's a query that searches a specific column: https://sf-trees-search.now.sh/sf-trees-search-a899b92?sql=select+*+from+Street_Tree_List+where+rowid+in+%28select+rowid+from+Street_Tree_List_fts+where+qSpecies+match+%27london%27%29%0D%0A\r\n\r\nIf we detect that a table has FTS enabled (which we can do by looking for it as a content table reference in another FTS table's create definition) we should add a search box to the table page which constructs this query - maybe using `?_search=XXX` in the query string?\r\n\r\n<s>To support search against specified columns, we can do `?_search__ qSpecies=London`.</s> - not necessary, see comment below.",
+    "created_at": "2017-11-19T15:16:20Z",
+    "url": "https://github.com/simonw/datasette/issues/131",
+    "reference": [
+      "Detect if a table has a FTS index defined against it as a content= parameter",
+      "Decide what to do if there is more than one FTS index (maybe just pick the first one?)",
+      "Add the `?_search=` query string argument",
+      "Add the UI"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-150",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "_group_count= feature improvements",
+    "body": "",
+    "created_at": "2017-11-24T22:06:18Z",
+    "url": "https://github.com/simonw/datasette/issues/150",
+    "reference": [
+      "The \"apply filters\" form should keep you on the _group_count= page",
+      "Foreign key references should be expand",
+      "Page title should reflect the view you are on"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-153",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Ability to customize presentation of specific columns in HTML view",
+    "body": "This ties into https://github.com/simonw/datasette/issues/3 in some ways. It would be great to have some adaptability in the HTML views and to specific some columns as displaying in certain ways.",
+    "created_at": "2017-11-26T17:46:11Z",
+    "url": "https://github.com/simonw/datasette/issues/153",
+    "reference": [
+      "1. **Auto-parsing URIs into in-browser links.** Why? Lots of public data around cultural commons stuff links to a specific URL. This would be a great utility to turn on at the command line, just parse everything for URLs. Maybe they need to be underlined or represented in a different way than internal URLs.",
+      "2. **Ability to identify a column as plain/preformatted text.** Why? Was trying to import the Enron emails, the body collapses. Hard to read. These fields also tend to screw up the ability to scan a table view. If you knew it was text the system could set an `overflow` property on the relevant CSS, so you could still scan.",
+      "3. **Ability to identify a column as HTML.** Why? I want to spider some stuff and drop sections into SQLite, and just keep them as HTML."
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-189",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Ability to sort (and paginate) by column",
+    "body": "As requested in https://github.com/simonw/datasette/issues/185#issuecomment-376614973\r\n\r\nI've previously avoided this for performance reasons: sort-by-column on a column without an index is likely to perform badly for hundreds of thousands of rows.\r\n\r\nThat's not a good enough reason to avoid the feature entirely though. A few options:\r\n\r\n* Allow sort-by-column by default, give users the option to disable it for specific tables/columns\r\n* Disallow sort-by-column by default, give users option (probably in `metadata.json`) to enable it for specific tables/columns\r\n* Automatically detect if a column either has an index on it OR a table has less than X rows in it\r\n\r\nWe already have the mechanism in place to cut off SQL queries that take more than X seconds, so if someone DOES try to sort by a column that's too expensive it won't actually hurt anything - but it would be nice to not show people a \"sort\" option which is guaranteed to throw a timeout error.\r\n\r\nThe vast majority of datasette usage that I've seen so far is on smaller datasets where the performance penalties of sort-by-column are extremely unlikely to show up.\r\n\r\n----\r\n\r\nStill left to do:",
+    "created_at": "2018-03-28T18:04:51Z",
+    "url": "https://github.com/simonw/datasette/issues/189",
+    "reference": [
+      "UI that shows which sort order is currently being applied (in HTML and in JSON)",
+      "UI for applying a sort order (with rel=nofollow to avoid Google crawling it)",
+      "Sort column names should be escaped correctly in generated SQL",
+      "Validation that the selected sort order is a valid column",
+      "Throw error if user attempts to apply _sort AND _sort_desc at the same time",
+      "Ability to disable sorting (or sort only for specific columns) in metadata.json",
+      "Fix \"201 rows where sorted by sortable_with_nulls \" bug"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-255",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Facets",
+    "body": "Ability to display facets and facet counts on the table view.\r\n\r\nFacets can be specified in the URL with `?_facet=column&_facet=othercolumn` or the default facets for a table can be set using a new `\"facets\": [...]` property in `metadata.json`",
+    "created_at": "2018-05-12T03:00:07Z",
+    "url": "https://github.com/simonw/datasette/issues/255",
+    "reference": [
+      "Implement `?_facet=`",
+      "Implement `metadata.json` `facets` key",
+      "Design for how facets should be presented",
+      "Facets should be able to toggle off as well as on",
+      "Expand labels for facets that are foreign keys",
+      "Suggest potential facets (if we can do so within a tight time limit)",
+      "Documentation"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-284",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Ability to enable/disable specific features via --config",
+    "body": "`--config` settings from #274 can currently only be integers.\r\n\r\nI'd like them to be available as boooeans too. Then we can use them to have that are turned on by default but can be turned off.\r\n\r\nFirst features to get this treatment:\r\n\nRefs #275",
+    "created_at": "2018-05-24T15:47:56Z",
+    "url": "https://github.com/simonw/datasette/issues/284",
+    "reference": [
+      "`allow_sql` - whether or not the `?sql=` parameter is allowed and form is displayed",
+      "`allow_facet` - is `?_facet=` allowed or do we only run facets defined in `metadata.json`",
+      "`allow_download` - do we let users download the full SQLite database file?",
+      "`suggest_facets` - do we attempt to calculate suggested facets?"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-420",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Fix all the places that currently use .inspect() data",
+    "body": "See #419: if Datasette is going to work against mutable SQLite files it can no longer assume that the `.inspect()` method will have cached the correct schema for all tables in all attached databases.\r\n\r\nSo everywhere in the code at the moment that relies on `.inspect()` data needs to be modified to use live introspection of the schema instead.\r\n\r\nFrom [a comment later on](https://github.com/simonw/datasette/issues/420#issuecomment-474398127): here are the uses I need to fix as a checklist:",
+    "created_at": "2019-03-17T20:54:37Z",
+    "url": "https://github.com/simonw/datasette/issues/420",
+    "reference": [
+      "`table_exists()`",
+      "`info[\"file\"]` in `.execute()`",
+      "`resolve_db_name()`",
+      "`.database_url(database)`",
+      "`DatabaseDownload` file path",
+      "`sortable_columns_for_table()` uses it to find the columns in a table",
+      "`expandable_columns()` uses it to find foreign keys",
+      "`expand_foreign_keys()` uses it to find foreign keys",
+      "`display_columns_and_rows()` uses it to find primary keys and foreign keys... but also has access to a cursor.description which it uses to list the columns",
+      "`TableView.data` uses it to lookup columns and primary keys and the table_rows_count (used if the thing isn't a view) and probably a few more things, this method is huge!",
+      "`RowView.data` uses it for primary keys",
+      "`foreign_key_tables()` uses it for foreign keys",
+      "`DatabaseView` list of tables",
+      "`IndexView`"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-773",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "All plugin hooks should have unit tests",
+    "body": "Four hooks currently missing tests:\r\n\n```\r\n$ pytest -k test_plugin_hooks_have_tests -vv\r\n====================================== test session starts ======================================\r\nplatform darwin -- Python 3.7.7, pytest-5.2.4, py-1.8.1, pluggy-0.13.1 -- /Users/simon/.local/share/virtualenvs/datasette-AWNrQs95/bin/python\r\ncachedir: .pytest_cache\r\nrootdir: /Users/simon/Dropbox/Development/datasette, inifile: pytest.ini\r\nplugins: asyncio-0.10.0\r\ncollected 486 items / 475 deselected / 11 selected                                              \r\n\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[asgi_wrapper] XPASS                   [  9%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[extra_body_script] XPASS              [ 18%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[extra_css_urls] XPASS                 [ 27%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[extra_js_urls] XPASS                  [ 36%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[extra_template_vars] XPASS            [ 45%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[prepare_connection] XPASS             [ 54%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[prepare_jinja2_environment] XFAIL     [ 63%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[publish_subcommand] XFAIL             [ 72%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[register_facet_classes] XFAIL         [ 81%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[register_output_renderer] XFAIL       [ 90%]\r\ntests/test_plugins.py::test_plugin_hooks_have_tests[render_cell] XPASS                    [100%]\r\n\r\n========================= 475 deselected, 4 xfailed, 7 xpassed in 1.70s =========================\r\n\r\n_Originally posted by @simonw in https://github.com/simonw/datasette/issues/771#issuecomment-634915104_",
+    "created_at": "2020-05-27T20:17:41Z",
+    "url": "https://github.com/simonw/datasette/issues/773",
+    "reference": [
+      "prepare_jinja2_environment",
+      "publish_subcommand",
+      "register_facet_classes",
+      "register_output_renderer"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-787",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "\"datasette publish\" should bake in a random --secret",
+    "body": "To allow signed cookies etc to work reliably (see #785) all of the `datasette publish` commands should generate a random secret on publish and bake it into the configuration - probably by setting the `DATASETTE_SECRET` environment variable.",
+    "created_at": "2020-06-01T01:15:26Z",
+    "url": "https://github.com/simonw/datasette/issues/787",
+    "reference": [
+      "Cloud Run",
+      "Heroku",
+      "https://github.com/simonw/datasette-publish-now",
+      "https://github.com/simonw/datasette-publish-fly"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-811",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Support \"allow\" block on root, databases and tables, not just queries",
+    "body": "No reason not to expand the \"allow\" mechanism [described here](https://github.com/simonw/datasette/blob/86dec9e8fffd6c4efec928ae9b5713748dec7e74/docs/authentication.rst#permissions-for-canned-queries) to the root of `metadata.json` plus to databases and tables.\r\n\r\nRefs #810 and #800.\r\n\r\n```json\r\n{\r\n    \"databases\": {\r\n        \"mydatabase\": {\r\n            \"allow\": {\r\n                \"id\": [\"root\"]\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nTODO:",
+    "created_at": "2020-06-07T17:01:09Z",
+    "url": "https://github.com/simonw/datasette/issues/811",
+    "reference": [
+      "Instance level",
+      "Database level",
+      "Table level",
+      "Query level",
+      "Affects list of queries",
+      "Affects list of tables on database page",
+      "Affects truncated list of tables on index page",
+      "Affects list of SQL views on database page",
+      "Affects list of databases on index page",
+      "Show \ud83d\udd12 in header on index page for private instances",
+      "Show \ud83d\udd12 in header on private database page",
+      "Show \ud83d\udd12 in header on private table page",
+      "Show \ud83d\udd12 in header on private query page",
+      "Move `assert_permissions_checked()` calls from `test_html.py` to `test_permissions.py`",
+      "Update documentation"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-939",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "extra_ plugin hooks should take the same arguments",
+    "body": "_Originally posted by @simonw in https://github.com/simonw/datasette/issues/938#issuecomment-674544691_",
+    "created_at": "2020-08-16T16:04:54Z",
+    "url": "https://github.com/simonw/datasette/issues/939",
+    "reference": [
+      "`extra_css_urls(template, database, table, datasette)`",
+      "`extra_js_urls(template, database, table, datasette)`",
+      "`extra_body_script(template, database, table, view_name, datasette)`",
+      "`extra_template_vars(template, database, table, view_name, request, datasette)`"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-956",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Push to Docker Hub failed - but it shouldn't run for alpha releases anyway",
+    "body": "https://github.com/simonw/datasette/runs/1043709494?check_suite_focus=true\r\n\r\n<img width=\"740\" alt=\"Release_notes_for_0_49a0_\u00b7_simonw_datasette_7178126\" src=\"https://user-images.githubusercontent.com/9599/91625110-80c55a80-e959-11ea-8fea-70508c53fcfb.png\">",
+    "created_at": "2020-08-29T01:09:12Z",
+    "url": "https://github.com/simonw/datasette/issues/956",
+    "reference": [
+      "This step should not run if a release is an alpha or beta",
+      "When it DOES run it should work",
+      "See it work for both an alpha and a non-alpha release, then close this ticket"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1661",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Remove Hashed URL mode",
+    "body": "It's now handled by a plugin instead:\r\n- #647\r\n- https://github.com/simonw/datasette-hashed-urls/issues/3\r\n\r\nhttps://github.com/simonw/datasette-hashed-urls\r\n\r\nSub-tasks:",
+    "created_at": "2022-03-15T23:13:56Z",
+    "url": "https://github.com/simonw/datasette/issues/1661",
+    "reference": [
+      "Remove hashed URL mode implementation",
+      "Update documentation",
+      "Ensure `--setting hash_urls 1` shows a useful message"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1733",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Get Datasette compatible with Pyodide",
+    "body": "I've already got this working as a prototype. Here are the changes I had to make:\r\n\r\n- Replace the two dependencies that don't publish pure Python wheels to PyPI: `click-default-group` and `python-baseconv`\r\n- Get Datasette to work without threading - which it turns out is exclusively used for database connections\r\n- Make the `uvicorn` dependency optional (only needed when Datasette runs in the CLI)\r\n\r\nTODO:\r\n\nGoal is to be able to do the following directly in https://pyodide.org/en/stable/console.html\r\n\r\n```python\r\nimport micropip\r\nawait micropip.install(\"datasette\")\r\nfrom datasette.app import Datasette\r\nds = Datasette()\r\nawait ds.client.get(\"/.json\")\r\n```",
+    "created_at": "2022-05-02T19:01:58Z",
+    "url": "https://github.com/simonw/datasette/issues/1733",
+    "reference": [
+      "Switch to `click-default-group-wheel`",
+      "https://github.com/simonw/datasette/issues/1734",
+      "Work around `uvicorn` import error",
+      "https://github.com/simonw/datasette/issues/1735",
+      "#1737"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1850",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Write API in Datasette core",
+    "body": "I need this for Datasette Cloud, and in thinking it through I realized that it's really time Datasette grew a default write API as well.\r\n\r\nI'm going to mostly model this off `sqlite-utils`, since I've spent a bunch of time iterating on a pseudo-JSON API for that over the past few years (piping JSON to stdin etc).\r\n\r\nI want this for Datasette 1.0. I'm going to be building it in the new [1.0-dev](https://github.com/simonw/datasette/tree/1.0-dev) branch, which is automatically deployed to https://latest-1-0-dev.datasette.io/ running on Cloud Run.\r\n\r\nAPI features to build:\r\n\nBumped to later on:\r\n\r\n- #1855\r\n- #1878\r\n- #1873\r\n- #1875\r\n- Make sure CORS works\r\n- https://github.com/simonw/datasette/issues/1889\r\n- Alter a table - `sqlite-utils transform` style (more powerful than straight ALTER)\r\n- Execute SQL against a write connection\r\n- Maybe even multiple write SQL statements bundled in a single transaction\r\n- https://github.com/simonw/datasette/issues/1867",
+    "created_at": "2022-10-24T22:13:24Z",
+    "url": "https://github.com/simonw/datasette/issues/1850",
+    "reference": [
+      "#1852",
+      "#1856",
+      "#1857",
+      "#1858",
+      "#1859",
+      "#1871",
+      "#1888",
+      "#1868",
+      "#1851",
+      "#1863",
+      "#1864",
+      "#1866",
+      "https://github.com/simonw/datasette/issues/1882",
+      "#1862",
+      "#1874",
+      "https://github.com/simonw/datasette/issues/1887",
+      "#1877"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1855",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "`datasette create-token` ability to create tokens with a reduced set of permissions",
+    "body": "Initial design ideas: https://github.com/simonw/datasette/issues/1852#issuecomment-1289733483\r\n\r\n> Token design concept:\r\n> \r\n> ```json\r\n> {\r\n>     \"t\": {\r\n>         \"a\": [\"ir\", \"ur\", \"dr\"],\r\n>         \"d\": {\r\n>             \"fixtures\": [\"ir\", \"ur\", \"dr\"]\r\n>         },\r\n>         \"t\": {\r\n>             \"fixtures\": {\r\n>                 \"searchable\": [\"ir\"]\r\n>             }\r\n>         }\r\n>     }\r\n> }\r\n> ```\r\n> \r\n> That JSON would be minified and signed.\r\n> \r\n> Minified version of the above looks like this (101 characters):\r\n> \r\n> `{\"t\":{\"a\":[\"ir\",\"ur\",\"dr\"],\"d\":{\"fixtures\":[\"ir\",\"ur\",\"dr\"]},\"t\":{\"fixtures\":{\"searchable\":[\"ir\"]}}}}`\r\n> \r\n> The `\"t\"` key shows this is a token that as a default API key.\r\n> \r\n> `\"a\"` means \"all\" - these are permissions that have been granted on all tables and databases.\r\n> \r\n> `\"d\"` means \"databases\" - this is a way to set permissions for all tables in a specific database.\r\n> \r\n> `\"t\"` means \"tables\" - this lets you set permissions at a finely grained table level.\r\n> \r\n> Then the permissions themselves are two character codes which are shortened versions - so:\r\n> \r\n> * `ir` = `insert-row`\r\n> * `ur` = `update-row`\r\n> * `dr` = `delete-row`\r\n\r\n## Remaining tasks",
+    "created_at": "2022-10-26T02:20:52Z",
+    "url": "https://github.com/simonw/datasette/issues/1855",
+    "reference": [
+      "Add these options to the `datasette create-token` command",
+      "Tests for `datasette create-token` options",
+      "Documentation for those options at https://docs.datasette.io/en/latest/authentication.html#datasette-create-token",
+      "A way to handle permissions that don't have known abbreviations (permissions added by plugins). Probably need to solve the plugin permission registration problem as part of that",
+      "Stop hard-coding names of actions in the `permission_allowed_actor_restrictions` function"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1927",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "ignore:true/replace:true options for /db/-/create API",
+    "body": "See also:\r\n- #1924\r\n\r\nIt turns out I want to be able to call `/db/-/create` multiple times with the `rows` argument, so that I don't have to worry about creating the table first.\r\n\r\nAs such I find myself wanting support for the `\"insert\": true` and `\"replace\": true` options as well.\r\n\r\nStill TODO:",
+    "created_at": "2022-12-02T20:32:30Z",
+    "url": "https://github.com/simonw/datasette/issues/1927",
+    "reference": [
+      "A test for the case where you call `/-/create` twice with `rows` without using these options",
+      "`pk` should be required if you are using these options",
+      "Error if you pass `pk` and the table exists already but has a different `pk`",
+      "Documentation for `insert` and `replace` - and what happens if you repeat a `/-/create` with rows generally",
+      "Documentation should explain that you are allowed to call `/-/create` more than once using `rows`."
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2247",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Table configuration settings should work in both metadata.yml and datasette.yml",
+    "body": "The https://docs.datasette.io/en/latest/configuration.html page should gather together the various table settings, including:\r\n\r\nhttps://docs.datasette.io/en/latest/facets.html#facets-in-metadata\r\n\r\n```yaml\r\ndatabases:\r\n  sf-trees:\r\n    tables:\r\n      Street_Tree_List:\r\n        facets:\r\n        - qLegalStatus\r\n        facet_size: 10\r\n```\r\n\r\nhttps://docs.datasette.io/en/latest/full_text_search.html#configuring-full-text-search-for-a-table-or-view\r\n\r\n```yaml\r\ndatabases:\r\n  russian-ads:\r\n    tables:\r\n      display_ads:\r\n        fts_table: ads_fts\r\n        fts_pk: id\r\n        searchmode: raw\r\n```\r\n\r\nAnd a bunch of stuff from metadata (has this moved to `datasette.yaml` yet?)\r\n\r\nhttps://docs.datasette.io/en/latest/metadata.html#setting-a-default-sort-order\r\n\r\n```yaml\r\ndatabases:\r\n  mydatabase:\r\n    tables:\r\n      example_table:\r\n        sort_desc: created\r\n        size: 10\r\n        sortable_columns:\r\n        - height\r\n        - weight\r\n        label_column: title\r\n        hidden: true\r\n```\r\nThere's a full list here:\r\n\r\nhttps://docs.datasette.io/en/latest/metadata.html#table-level-metadata",
+    "created_at": "2024-02-01T04:12:33Z",
+    "url": "https://github.com/simonw/datasette/issues/2247",
+    "reference": [
+      "`hidden`",
+      "`sort/sort_desc`",
+      "`size`",
+      "`sortable_columns`",
+      "`label_column`",
+      "`facets`",
+      "`fts_table`",
+      "`fts_pk`",
+      "`searchmode`"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2420",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Clean up other CSS styles that apply to elements without a class",
+    "body": "Following:\r\n- #2415\r\n\r\nThere are still some selectors in `app.css` that apply to everything in a way that could interfere with what plugins need to do.",
+    "created_at": "2024-09-06T02:35:20Z",
+    "url": "https://github.com/simonw/datasette/issues/2420",
+    "reference": [
+      "Sort out labels",
+      "Sort out header / footer",
+      "Sort out that `a img` thing",
+      "Sort out table styles"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2456",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Improved (final) permissions system for Datasette 1.0",
+    "body": "Tracking issue. Main things to solve are:\n\nRelated issues to solve:",
+    "created_at": "2025-01-16T01:14:48Z",
+    "url": "https://github.com/simonw/datasette/issues/2456",
+    "reference": [
+      "#2457",
+      "#1152",
+      "#461",
+      "https://github.com/simonw/datasette/issues/2402",
+      "https://github.com/simonw/datasette/issues/2292",
+      "https://github.com/simonw/datasette/issues/1943",
+      "https://github.com/simonw/datasette/issues/1690",
+      "The whole `root` actor ID thing is a bit of a mess"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2502",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "New permissions mechanism for efficiently listing available resources based on SQL fragments",
+    "body": "I've convinced myself this is a good idea based on some exploratory prototypes, time to turn it into real code.\n\nRelated:\n\n- #2456\n- #1152\n- #2292\n\nSteps:",
+    "created_at": "2025-09-22T17:00:21Z",
+    "url": "https://github.com/simonw/datasette/issues/2502",
+    "reference": [
+      "Design and implement new plugin hooks",
+      "Design and implement new internal methods for using those hook",
+      "Use those on the database index page to show a paginated list of tables that user can see",
+      "New `datasette.allowed()` method that uses the new SQL permissions"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-3074",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Test suite cleanup: move older tests to `datasette.client`, parametrize duplicates",
+    "body": "I had Fable 5.2 audit the test suite - in addition to the fixes I shipped in 8666758d923117642128e03fe1db032f61eeda11 and b92e31988250b8756a2c0131a4f82b00b1f1b03a and 9dc86753bb8c9070c02081fadc2070ac67a43fb6 and 61a81b62eb52e04ca2372ef8d0daebe6f4c58839 it made the following suggestions.\n\nInitial prompt:\n\n> Before `datasette.client` existed this test suite used other mechanisms for the tests - since `datasette.client` most tests have used that instead\n> \n> Do an audit of the test suite and look for opportunities to refactor older tests to use `datasette.client` - and while you are doing that, look out for performance boosts to the tests and also tests that could be combined cleanly using pytest.mark.parametrize\n\n<details><summary>Claude Fable 5.2 Medium</summary>\n\nFollow-up from an audit of the test suite. The main performance problem it found (the slow fixture database writer) is already fixed, along with two warnings and a plugin-leak ordering bug. This issue tracks what was found but not done.\n\n## 1. Move older tests from `TestClient` to `datasette.client`\n\nAbout 150 call sites in 13 files still use the sync `TestClient` from `datasette.utils.testing`, mostly through `make_app_client()` or the `app_client*` session fixtures in `tests/fixtures.py`. The suite has 543 sync tests and 1,195 async ones (not every sync test uses a client).\n\n| File | Sync-client calls | `make_app_client()` calls |\n|---|---|---|\n| `test_html.py` | 37 | 15 |\n| `test_permissions.py` | 22 | 12 |\n| `test_table_api.py` | 18 | 12 |\n| `test_plugins.py` | 16 | 8 |\n| `test_api.py` | 16 | 1 |\n| `test_table_html.py` | 15 | 9 |\n| `test_auth.py` | 9 | 0 |\n| `test_tracer.py` | 5 | 4 |\n| `test_stored_queries.py` | via fixtures | 3 |\n\n`test_csv.py`, `test_csrf_middleware.py`, `test_crossdb.py`, `test_facets.py` and `test_custom_pages.py` have a handful each.\n\nThey fall into four groups:\n\nDifferences to watch when porting:\n\n- `.status` becomes `.status_code`, and `.json` becomes `.json()`.\n- `post(path, {...}, csrftoken_from=True)` becomes `post(path, data={...})`. `csrftoken_from` appears 14 times and is already a no-op.\n- `if_none_match=` becomes an `if-none-match` header.\n\nLeave alone: `test_cli.py` (it uses `CliRunner`), and at least one test of `TestClient` itself, since plugins may still import it.\n\n## 2. Parametrize candidates\n\nFound by comparing test bodies structurally. \"Checked\" means the tests were read and confirmed to differ only in the listed values; the others are structural matches that still need a look.\n\n| File | Tests | Varies by | Checked |\n|---|---|---|---|\n| `test_column_types.py` | 9 validation tests (insert, update, upsert) | path, JSON body, status, error column | yes |\n| `test_error_shape.py` | 8 \"400 with this error\" tests, plus 4 similar 404s | path, expected error | yes |\n| `test_plugins.py` | 6 `test_hook_top_*` | path, expected fragment | yes |\n| `test_plugins.py` | 3 `test_hook_render_cell_pks_*` | path, expected pks | yes |\n| `test_utils_sql_analysis.py` | 6 `test_analyze_*_tables` | SQL, params, expected operations | yes |\n| `test_custom_pages.py` | 3 status/text tests and 3 redirect tests | path, status, text or location | yes |\n| `test_csrf_middleware.py` | 3 origin scheme/port tests | headers, scheme, outcome | yes |\n| `test_api.py` | 3 row JSON tests | path, expected rows | yes |\n| `test_table_html.py` | `test_metadata_sort` and `test_metadata_sort_desc`, 32 lines each | table, headers, rows | yes |\n| `test_table_api.py` | 10 shape, expand-label and infinity tests | path, expected JSON | no |\n| `test_csv.py` | 5 \"get path, compare body\" tests; CSV/TSV download pair | path, expected text | no |\n| `test_multipart.py` | 3 bad content-type tests | header, error | no |\n| `test_cli.py` | `test_install` / `test_uninstall` | command | no |\n\nProbably not worth combining: the `test_autocomplete.py` tests share a shape but each builds a different schema, and the 50-line pair in `test_restriction_sql.py` looks like the same scenario run deliberately through two APIs.\n\n## 3. Smaller items\n\n## Context\n\nSerial suite time on macOS after the fixture writer fix is about 86s (down from 261s). The slowest remaining tests are the subprocess ones in `test_pytest_autoclose_plugin.py` and `test_cli_serve_server.py` at roughly 1s each, which is inherent to what they do.\n\n</details>",
+    "created_at": "2026-11-15T22:52:48Z",
+    "url": "https://github.com/simonw/datasette/issues/3074",
+    "reference": [
+      "**Direct swap to `ds_client`.** Tests that use plain `app_client` for HTTP: `test_logout` and the create-token tests in `test_auth.py`, the three legacy-csrftoken tests in `test_csrf_middleware.py`, the column-statistics tests in `test_html.py` and `test_table_html.py`, and `test_permissions_checked`.",
+      "**Only need a `Datasette` object.** Eight tests and the `db` fixture in `test_internals_database.py` take `app_client` just for `.ds`.",
+      "**Custom settings or config only.** Most of the ~70 `make_app_client(settings=...)` / `config=...` calls. These want an async factory fixture that mirrors `ds_client` in `conftest.py` (in-memory fixtures database plus keyword overrides). That costs about 60ms and touches no disk.",
+      "**Need a real file.** Immutable databases, `inspect_data`, the dotted filename, `extra_databases`, crossdb and database download. These stay on disk but can make requests through `client.ds.client`.",
+      "`make_app_client()` calls `os.chdir()` into a temporary directory that is deleted when the context manager exits, leaving the process in a directory that no longer exists. Moving tests off `make_app_client()` (section 1) reduces exposure; the `chdir` itself may be removable.",
+      "`app_client_returned_rows_matches_page_size` in `tests/fixtures.py` appears to be unused and can be deleted.",
+      "`test_sql_time_limit` in both `test_api.py` and `test_html.py` runs `select sleep(0.5)` against a 20ms time limit. A shorter sleep would save about a second across the two.",
+      "`test_tracer.py` builds a fresh `trace_debug=True` client in three separate tests; they could share one fixture.",
+      "`conftest.py` uses `move_to_front()` to force some tests to run first. The plugin-leak fix removed one reason `test_plugins_cli` depended on ordering; it would be worth checking whether any of the `move_to_front()` entries are still needed."
+    ],
+    "traps": []
+  }
+]
