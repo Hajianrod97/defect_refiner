@@ -1,0 +1,952 @@
+[
+  {
+    "id": "ds-36",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Filter rows by date parts",
+    "body": "People want URL filters on date and timestamp columns that match a calendar date or parts of a date, in the same style as the existing `?column__gt=` filters.",
+    "created_at": "2017-10-25T04:23:45Z",
+    "url": "https://github.com/simonw/datasette/issues/36",
+    "reference": [
+      "`?timestamp___date=2017-07-17` - return every item where the timestamp falls on that date",
+      "`?timestamp___year=2017` - return every item where the timestamp falls within 2017",
+      "`?timestamp___month=1` - return every item where the month component is January",
+      "`?timestamp___day=10` - return every item where the day-of-the-month component is 10"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-44",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Grouped counts from a table page",
+    "body": "Let users get row counts grouped by a column (say, how many airports per country) straight from a table's URL, keeping any filters they've already applied.",
+    "created_at": "2017-10-30T19:50:32Z",
+    "url": "https://github.com/simonw/datasette/issues/44",
+    "reference": [
+      "Get initial version working",
+      "Refactor code to not just \"pretend to be a view\"",
+      "Get foreign key relationships expanded"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-61",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Shared header and footer",
+    "body": "Pages have no common navigation or branding. Add a consistent header and footer across the site.",
+    "created_at": "2017-11-11T20:20:08Z",
+    "url": "https://github.com/simonw/datasette/issues/61",
+    "reference": [
+      "A link to the homepage from some kind of navigation bar in the header",
+      "link to github.com/simonw/datasette in the footer",
+      "Slightly better titles (maybe ditch the visited link colours for titles only? should keep those for primary key links)"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-79",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "The JSON API is barely documented",
+    "body": "The README says little about how to use the API. Document it properly so people can build on it.",
+    "created_at": "2017-11-13T20:36:21Z",
+    "url": "https://github.com/simonw/datasette/issues/79",
+    "reference": [
+      "The ?column__gt=4 style filter arguments for tables",
+      "The ?sql= API, and how named parameters work",
+      "How API pagination works",
+      "How redirects and cache headers work"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-85",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Link rows through foreign keys",
+    "body": "When a column is a foreign key, show it as a link to the row it points at, ideally with a readable label instead of a bare ID.",
+    "created_at": "2017-11-14T06:12:05Z",
+    "url": "https://github.com/simonw/datasette/issues/85",
+    "reference": [
+      "Fix it to csvs-to-sqlite refactoring command correctly creates primary key on generated tables",
+      "Ship new csvs-to-sqlite with refactoring command",
+      "Refactor column logic to be more predictable in our templates (the rowid special case)",
+      "Mechanism by which table metadata can specify the \"label\" column for a table",
+      "Automatically set the label column as the first column that isn't a primary key (falling back on primary key)",
+      "Code which runs a \"select id, label from table where id in (...)\" query as part of the tableview and populates a lookup dictionary",
+      "Modify templates to use values from that lookup dictionary"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-131",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Full-text search on the table page",
+    "body": "Tables with a SQLite full-text index can only be searched by writing SQL by hand. Add search to the table page.",
+    "created_at": "2017-11-19T15:16:20Z",
+    "url": "https://github.com/simonw/datasette/issues/131",
+    "reference": [
+      "Detect if a table has a FTS index defined against it as a content= parameter",
+      "Decide what to do if there is more than one FTS index (maybe just pick the first one?)",
+      "Add the `?_search=` query string argument",
+      "Add the UI"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-189",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Sort tables by a column",
+    "body": "Users want to sort, and page through, a table by any column. Sorting on unindexed columns of big tables could be slow.",
+    "created_at": "2018-03-28T18:04:51Z",
+    "url": "https://github.com/simonw/datasette/issues/189",
+    "reference": [
+      "UI that shows which sort order is currently being applied (in HTML and in JSON)",
+      "UI for applying a sort order (with rel=nofollow to avoid Google crawling it)",
+      "Sort column names should be escaped correctly in generated SQL",
+      "Validation that the selected sort order is a valid column",
+      "Throw error if user attempts to apply _sort AND _sort_desc at the same time",
+      "Ability to disable sorting (or sort only for specific columns) in metadata.json",
+      "Fix \"201 rows where sorted by sortable_with_nulls \" bug"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-255",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Facets on the table page",
+    "body": "Show facet counts (each value of a column and how many rows have it) on the table page, so people can drill down. Some tables should show facets by default.",
+    "created_at": "2018-05-12T03:00:07Z",
+    "url": "https://github.com/simonw/datasette/issues/255",
+    "reference": [
+      "Implement `?_facet=`",
+      "Implement `metadata.json` `facets` key",
+      "Design for how facets should be presented",
+      "Facets should be able to toggle off as well as on",
+      "Expand labels for facets that are foreign keys",
+      "Suggest potential facets (if we can do so within a tight time limit)",
+      "Documentation"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-284",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Let operators switch features off",
+    "body": "Some features should stay on by default but be possible to switch off for a given instance, through the existing `--config` settings, which currently only accept integers.",
+    "created_at": "2018-05-24T15:47:56Z",
+    "url": "https://github.com/simonw/datasette/issues/284",
+    "reference": [
+      "`allow_sql` - whether or not the `?sql=` parameter is allowed and form is displayed",
+      "`allow_facet` - is `?_facet=` allowed or do we only run facets defined in `metadata.json`",
+      "`allow_download` - do we let users download the full SQLite database file?",
+      "`suggest_facets` - do we attempt to calculate suggested facets?"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-420",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Schema info goes stale when databases change",
+    "body": "We want to serve SQLite files that change while Datasette runs, but parts of the code rely on schema information cached at startup by `.inspect()`. Make them use live introspection.",
+    "created_at": "2019-03-17T20:54:37Z",
+    "url": "https://github.com/simonw/datasette/issues/420",
+    "reference": [
+      "`table_exists()`",
+      "`info[\"file\"]` in `.execute()`",
+      "`resolve_db_name()`",
+      "`.database_url(database)`",
+      "`DatabaseDownload` file path",
+      "`sortable_columns_for_table()` uses it to find the columns in a table",
+      "`expandable_columns()` uses it to find foreign keys",
+      "`expand_foreign_keys()` uses it to find foreign keys",
+      "`display_columns_and_rows()` uses it to find primary keys and foreign keys... but also has access to a cursor.description which it uses to list the columns",
+      "`TableView.data` uses it to lookup columns and primary keys and the table_rows_count (used if the thing isn't a view) and probably a few more things, this method is huge!",
+      "`RowView.data` uses it for primary keys",
+      "`foreign_key_tables()` uses it for foreign keys",
+      "`DatabaseView` list of tables",
+      "`IndexView`"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-773",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Some plugin hooks have no tests",
+    "body": "Not every plugin hook is covered by unit tests. All of them should be.",
+    "created_at": "2020-05-27T20:17:41Z",
+    "url": "https://github.com/simonw/datasette/issues/773",
+    "reference": [
+      "prepare_jinja2_environment",
+      "publish_subcommand",
+      "register_facet_classes",
+      "register_output_renderer"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-787",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Published instances need a stable secret",
+    "body": "Signed cookies stop working across restarts of instances deployed with `datasette publish`, because no fixed secret is set. Publishing should set one.",
+    "created_at": "2020-06-01T01:15:26Z",
+    "url": "https://github.com/simonw/datasette/issues/787",
+    "reference": [
+      "Cloud Run",
+      "Heroku",
+      "https://github.com/simonw/datasette-publish-now",
+      "https://github.com/simonw/datasette-publish-fly"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-811",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Restrict access to instances, databases and tables",
+    "body": "Canned queries can already be limited to certain actors with an `allow` block. Extend that so a whole instance, a database or a table can be limited too.",
+    "created_at": "2020-06-07T17:01:09Z",
+    "url": "https://github.com/simonw/datasette/issues/811",
+    "reference": [
+      "Instance level",
+      "Database level",
+      "Table level",
+      "Query level",
+      "Affects list of queries",
+      "Affects list of tables on database page",
+      "Affects truncated list of tables on index page",
+      "Affects list of SQL views on database page",
+      "Affects list of databases on index page",
+      "Show 🔒 in header on index page for private instances",
+      "Show 🔒 in header on private database page",
+      "Show 🔒 in header on private table page",
+      "Show 🔒 in header on private query page",
+      "Move `assert_permissions_checked()` calls from `test_html.py` to `test_permissions.py`",
+      "Update documentation"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-939",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Make the extra_ plugin hooks consistent",
+    "body": "The `extra_*` plugin hooks take different arguments from one another. They should all accept the same ones.",
+    "created_at": "2020-08-16T16:04:54Z",
+    "url": "https://github.com/simonw/datasette/issues/939",
+    "reference": [
+      "`extra_css_urls(template, database, table, datasette)`",
+      "`extra_js_urls(template, database, table, datasette)`",
+      "`extra_body_script(template, database, table, view_name, datasette)`",
+      "`extra_template_vars(template, database, table, view_name, request, datasette)`"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1661",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Take hashed URL mode out of core",
+    "body": "Hashed URL mode is now handled by the datasette-hashed-urls plugin. Remove it from Datasette itself.",
+    "created_at": "2022-03-15T23:13:56Z",
+    "url": "https://github.com/simonw/datasette/issues/1661",
+    "reference": [
+      "Remove hashed URL mode implementation",
+      "Update documentation",
+      "Ensure `--setting hash_urls 1` shows a useful message"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1733",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Run Datasette in the browser with Pyodide",
+    "body": "We'd like `micropip.install(\"datasette\")` to work in Pyodide, with requests served through `ds.client`. Some dependencies and parts of Datasette currently stop that.",
+    "created_at": "2022-05-02T19:01:58Z",
+    "url": "https://github.com/simonw/datasette/issues/1733",
+    "reference": [
+      "Switch to `click-default-group-wheel`",
+      "Remove python-baseconv dependency",
+      "Work around `uvicorn` import error",
+      "Datasette setting to disable threading (for Pyodide)",
+      "Automated test for Pyodide compatibility"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1850",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "A write API",
+    "body": "Datasette is read-only over HTTP. Add a JSON API for creating tables and inserting, updating and deleting rows, with API tokens for authentication. sqlite-utils' conventions are a good model.",
+    "created_at": "2022-10-24T22:13:24Z",
+    "url": "https://github.com/simonw/datasette/issues/1850",
+    "reference": [
+      "Default API token authentication mechanism",
+      "allow_signed_tokens setting for disabling API signed token mechanism",
+      "Prevent API tokens from using /-/create-token to create more tokens",
+      "`max_signed_tokens_ttl` setting for a maximum duration on API tokens",
+      "datasette create-token CLI command",
+      "API explorer tool",
+      "API explorer should take immutability into account",
+      "Design URLs for the write API",
+      "API to insert a single record into an existing table",
+      "Update a single record in an existing table",
+      "Delete a single record from an existing table",
+      "API for bulk inserting records into a table",
+      "`/db/-/create` API for creating tables",
+      "Create a new table from one or more records, `sqlite-utils` style",
+      "API to drop a table",
+      "Add a confirm step to the drop table API",
+      "Refactor and tidy up final write API code"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1855",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Tokens with limited permissions",
+    "body": "Tokens made with `datasette create-token` carry all of their actor's permissions. Allow making tokens limited to particular actions, databases or tables.",
+    "created_at": "2022-10-26T02:20:52Z",
+    "url": "https://github.com/simonw/datasette/issues/1855",
+    "reference": [
+      "Add these options to the `datasette create-token` command",
+      "Tests for `datasette create-token` options",
+      "Documentation for those options at https://docs.datasette.io/en/latest/authentication.html#datasette-create-token",
+      "A way to handle permissions that don't have known abbreviations (permissions added by plugins). Probably need to solve the plugin permission registration problem as part of that",
+      "Stop hard-coding names of actions in the `permission_allowed_actor_restrictions` function"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-1927",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Calling the create-table API more than once",
+    "body": "Calling `/db/-/create` with `rows` a second time fails because the table now exists. Callers want to call it repeatedly without checking first.",
+    "created_at": "2022-12-02T20:32:30Z",
+    "url": "https://github.com/simonw/datasette/issues/1927",
+    "reference": [
+      "A test for the case where you call `/-/create` twice with `rows` without using these options",
+      "`pk` should be required if you are using these options",
+      "Error if you pass `pk` and the table exists already but has a different `pk`",
+      "Documentation for `insert` and `replace` - and what happens if you repeat a `/-/create` with rows generally",
+      "Documentation should explain that you are allowed to call `/-/create` more than once using `rows`."
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2247",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "One place for table settings",
+    "body": "Table-level settings are split between metadata.yml and datasette.yml. They should all work from datasette.yml and be documented together.",
+    "created_at": "2024-02-01T04:12:33Z",
+    "url": "https://github.com/simonw/datasette/issues/2247",
+    "reference": [
+      "`hidden`",
+      "`sort/sort_desc`",
+      "`size`",
+      "`sortable_columns`",
+      "`label_column`",
+      "`facets`",
+      "`fts_table`",
+      "`fts_pk`",
+      "`searchmode`"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2420",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "CSS that leaks into plugins",
+    "body": "Some rules in `app.css` target bare elements and interfere with markup that plugins render. Scope them.",
+    "created_at": "2024-09-06T02:35:20Z",
+    "url": "https://github.com/simonw/datasette/issues/2420",
+    "reference": [
+      "Sort out labels",
+      "Sort out header / footer",
+      "Sort out that `a img` thing",
+      "Sort out table styles"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-2502",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Efficiently list what a user may see",
+    "body": "Working out which tables a user can see takes a permission check per table, too slow for instances with many tables. Find an efficient mechanism, such as permission rules that compile to SQL.",
+    "created_at": "2025-09-22T17:00:21Z",
+    "url": "https://github.com/simonw/datasette/issues/2502",
+    "reference": [
+      "Design and implement new plugin hooks",
+      "Design and implement new internal methods for using those hook",
+      "Use those on the database index page to show a paginated list of tables that user can see",
+      "New `datasette.allowed()` method that uses the new SQL permissions"
+    ],
+    "traps": []
+  },
+  {
+    "id": "ds-3074",
+    "source": "real",
+    "repo": "simonw/datasette",
+    "title": "Tidy up the test suite",
+    "body": "Many older tests use legacy fixtures instead of `datasette.client`, duplicate one another, or are slow. Clean the suite up.",
+    "created_at": "2026-11-15T22:52:48Z",
+    "url": "https://github.com/simonw/datasette/issues/3074",
+    "reference": [
+      "**Direct swap to `ds_client`.** Tests that use plain `app_client` for HTTP: `test_logout` and the create-token tests in `test_auth.py`, the three legacy-csrftoken tests in `test_csrf_middleware.py`, the column-statistics tests in `test_html.py` and `test_table_html.py`, and `test_permissions_checked`.",
+      "**Only need a `Datasette` object.** Eight tests and the `db` fixture in `test_internals_database.py` take `app_client` just for `.ds`.",
+      "**Custom settings or config only.** Most of the ~70 `make_app_client(settings=...)` / `config=...` calls. These want an async factory fixture that mirrors `ds_client` in `conftest.py` (in-memory fixtures database plus keyword overrides). That costs about 60ms and touches no disk.",
+      "**Need a real file.** Immutable databases, `inspect_data`, the dotted filename, `extra_databases`, crossdb and database download. These stay on disk but can make requests through `client.ds.client`.",
+      "`make_app_client()` calls `os.chdir()` into a temporary directory that is deleted when the context manager exits, leaving the process in a directory that no longer exists. Moving tests off `make_app_client()` (section 1) reduces exposure; the `chdir` itself may be removable.",
+      "`app_client_returned_rows_matches_page_size` in `tests/fixtures.py` appears to be unused and can be deleted.",
+      "`test_sql_time_limit` in both `test_api.py` and `test_html.py` runs `select sleep(0.5)` against a 20ms time limit. A shorter sleep would save about a second across the two.",
+      "`test_tracer.py` builds a fresh `trace_debug=True` client in three separate tests; they could share one fixture.",
+      "`conftest.py` uses `move_to_front()` to force some tests to run first. The plugin-leak fix removed one reason `test_plugins_cli` depended on ordering; it would be worth checking whether any of the `move_to_front()` entries are still needed."
+    ],
+    "traps": []
+  },
+  {
+    "id": "w-01",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Let other websites call our API",
+    "body": "Partners want to call our Datasette JSON API from JavaScript on their own sites, but the browser blocks the requests.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "No new feature: Datasette's `--cors` option already sends Access-Control-Allow-Origin",
+      "Turn on `--cors` for our deployment and document it for partners"
+    ],
+    "traps": [
+      {
+        "kind": "already_exists",
+        "expect": "Says CORS support already exists (`--cors`), naming it.",
+        "where": [
+          "open_questions",
+          "risks",
+          "stories"
+        ],
+        "all_of": [
+          [
+            "--cors"
+          ],
+          [
+            "already",
+            "exist",
+            "existing",
+            "built-in",
+            "built in",
+            "supported",
+            "provides"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-02",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Hide columns on table pages",
+    "body": "Wide tables are hard to read. Users want to hide the columns they don't care about.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "No new feature: the column menu and `?_col=` / `?_nocol=` already hide columns",
+      "Make the column options easier to discover, if users can't find them"
+    ],
+    "traps": [
+      {
+        "kind": "already_exists",
+        "expect": "Says hiding columns already works (`_col` / `_nocol`, column menu), naming it.",
+        "where": [
+          "open_questions",
+          "risks",
+          "stories"
+        ],
+        "all_of": [
+          [
+            "_nocol",
+            "_col"
+          ],
+          [
+            "already",
+            "exist",
+            "existing",
+            "built-in",
+            "built in",
+            "supported",
+            "provides"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-03",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Stop runaway queries",
+    "body": "Someone ran a huge custom SQL query and the server was unresponsive for minutes. Stop long queries from hogging it.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "No new feature: the `sql_time_limit_ms` setting already cancels long queries",
+      "Lower `sql_time_limit_ms` for our instance if the default (1s) is too generous"
+    ],
+    "traps": [
+      {
+        "kind": "already_exists",
+        "expect": "Says a query time limit already exists (`sql_time_limit_ms`), naming it.",
+        "where": [
+          "open_questions",
+          "risks",
+          "stories"
+        ],
+        "all_of": [
+          [
+            "sql_time_limit"
+          ],
+          [
+            "already",
+            "exist",
+            "existing",
+            "built-in",
+            "built in",
+            "supported",
+            "provides"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-04",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Download tables as a spreadsheet",
+    "body": "Analysts want to get a table's rows, with the filters they've applied, into Excel or Google Sheets.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "No new feature for the common case: every table and query already exports as CSV, which spreadsheets open",
+      "Ask whether a real .xlsx file is needed; if so, that's a plugin"
+    ],
+    "traps": [
+      {
+        "kind": "already_exists",
+        "expect": "Says CSV export already exists and spreadsheets open it, naming it.",
+        "where": [
+          "open_questions",
+          "risks",
+          "stories"
+        ],
+        "all_of": [
+          [
+            "csv"
+          ],
+          [
+            "already",
+            "exist",
+            "existing",
+            "built-in",
+            "built in",
+            "supported",
+            "provides"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-05",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "An API to delete a table",
+    "body": "Our import scripts need to delete a table over the API before re-creating it.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "No new feature: the write API already has `/db/table/-/drop`, guarded by the drop-table permission",
+      "Give the import script's token the drop-table permission"
+    ],
+    "traps": [
+      {
+        "kind": "already_exists",
+        "expect": "Says the drop-table API already exists, naming it.",
+        "where": [
+          "open_questions",
+          "risks",
+          "stories"
+        ],
+        "all_of": [
+          [
+            "/-/drop",
+            "drop-table",
+            "drop_table"
+          ],
+          [
+            "already",
+            "exist",
+            "existing",
+            "built-in",
+            "built in",
+            "supported",
+            "provides"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-06",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Make Datasette faster",
+    "body": "Datasette feels slow. Speed it up.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Find out which pages are slow and for which databases",
+      "Set a measurable target and baseline",
+      "Profile and fix the slowest path found"
+    ],
+    "traps": [
+      {
+        "kind": "ambiguous",
+        "expect": "Asks which pages or queries are slow and what the target is.",
+        "where": [
+          "open_questions"
+        ],
+        "all_of": [
+          [
+            "which",
+            "what",
+            "where",
+            "target",
+            "baseline",
+            "benchmark",
+            "measure",
+            "metric"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-07",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Support Excel",
+    "body": "Customers keep asking for Excel support.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Clarify: importing .xlsx files, exporting to .xlsx, or both",
+      "Then build the chosen direction, probably as a plugin"
+    ],
+    "traps": [
+      {
+        "kind": "ambiguous",
+        "expect": "Asks whether this means importing Excel files, exporting to Excel, or both.",
+        "where": [
+          "open_questions"
+        ],
+        "all_of": [
+          [
+            "import",
+            "upload"
+          ],
+          [
+            "export",
+            "download"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-08",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Tell people when data changes",
+    "body": "Users want to know when the data they care about changes.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Clarify who is notified, about which changes, and through what channel",
+      "Detect changes to watched tables",
+      "Deliver notifications through the chosen channel"
+    ],
+    "traps": [
+      {
+        "kind": "ambiguous",
+        "expect": "Asks how people should be notified (email, webhook, in-app...) and about what.",
+        "where": [
+          "open_questions"
+        ],
+        "all_of": [
+          [
+            "email",
+            "webhook",
+            "slack",
+            "channel",
+            "in-app",
+            "notification method",
+            "how should"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-09",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Search should work everywhere",
+    "body": "Search is too limited. People should be able to search for anything.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Clarify whether this means one search box across all tables and databases",
+      "Decide which tables are searchable (only those with full-text indexes?)",
+      "Build cross-table search over the chosen tables"
+    ],
+    "traps": [
+      {
+        "kind": "ambiguous",
+        "expect": "Asks whether this means searching across all tables/databases, and which ones.",
+        "where": [
+          "open_questions"
+        ],
+        "all_of": [
+          [
+            "across",
+            "all tables",
+            "all databases",
+            "every table",
+            "global",
+            "multiple tables",
+            "which tables"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-10",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "User accounts",
+    "body": "We need user accounts.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Clarify how people sign in: an existing identity provider (GitHub, SSO) or passwords",
+      "Use an authentication plugin for the chosen method rather than building login into core",
+      "Map accounts to permissions"
+    ],
+    "traps": [
+      {
+        "kind": "ambiguous",
+        "expect": "Asks how users should sign in (passwords, GitHub, SSO...), noting Datasette leaves login to plugins.",
+        "where": [
+          "open_questions"
+        ],
+        "all_of": [
+          [
+            "password",
+            "oauth",
+            "github",
+            "sso",
+            "provider",
+            "sign in",
+            "sign-in",
+            "log in",
+            "login"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-11",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "JSON Lines export and favourite tables",
+    "body": "Add a JSON Lines export format, and let people star their favourite tables so they show at the top of the home page.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "JSON Lines output format for tables and queries",
+      "Starring tables, stored per user",
+      "Show starred tables first on the home page"
+    ],
+    "traps": [
+      {
+        "kind": "two_in_one",
+        "expect": "Splits into separate stories for JSON Lines export and favourite tables.",
+        "where": [
+          "stories"
+        ],
+        "separate": [
+          [
+            "json lines",
+            "jsonl",
+            "newline-delimited",
+            "ndjson"
+          ],
+          [
+            "star",
+            "favourite",
+            "favorite"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-12",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Dark mode and vacuuming",
+    "body": "Add a dark mode to the UI, and a CLI command that vacuums the databases.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Dark colour scheme that follows the system setting",
+      "CLI command to VACUUM one or all databases"
+    ],
+    "traps": [
+      {
+        "kind": "two_in_one",
+        "expect": "Splits dark mode and the vacuum command into separate stories.",
+        "where": [
+          "stories"
+        ],
+        "separate": [
+          [
+            "dark"
+          ],
+          [
+            "vacuum"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-13",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Row counts and rate limits",
+    "body": "Show each table's row count on the database page, and rate-limit the write API.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Show row counts on the database page (with a time limit for big tables)",
+      "Rate-limit write API requests per token"
+    ],
+    "traps": [
+      {
+        "kind": "two_in_one",
+        "expect": "Splits row counts and write-API rate limiting into separate stories.",
+        "where": [
+          "stories"
+        ],
+        "separate": [
+          [
+            "count"
+          ],
+          [
+            "rate"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-14",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Remember each visitor's sort order",
+    "body": "When a visitor sorts a table, save their choice into that database so the table opens sorted the same way next time.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Store per-visitor preferences outside the served databases (cookie or internal database), since served databases may be immutable or read-only",
+      "Apply the saved sort when the table opens"
+    ],
+    "traps": [
+      {
+        "kind": "conflict",
+        "expect": "Flags that served databases may be immutable/read-only, so preferences can't be written into them.",
+        "where": [
+          "open_questions",
+          "risks"
+        ],
+        "all_of": [
+          [
+            "immutable",
+            "read-only",
+            "read only",
+            "readonly",
+            "internal database"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "w-15",
+    "source": "written",
+    "repo": "simonw/datasette",
+    "title": "Let the SQL editor change data",
+    "body": "Analysts want to run UPDATE and INSERT statements in the SQL editor to fix bad rows.",
+    "created_at": "2025-06-01T00:00:00Z",
+    "url": null,
+    "reference": [
+      "Keep the SQL editor read-only (it runs only SELECT by design)",
+      "Point analysts at the write API or the row edit endpoints, with the right permissions"
+    ],
+    "traps": [
+      {
+        "kind": "conflict",
+        "expect": "Flags that the SQL editor is read-only by design and points at the write API.",
+        "where": [
+          "open_questions",
+          "risks"
+        ],
+        "all_of": [
+          [
+            "read-only",
+            "read only",
+            "readonly",
+            "only select",
+            "only runs select",
+            "only allows select",
+            "write api",
+            "insert api",
+            "/-/insert",
+            "/-/update"
+          ]
+        ]
+      }
+    ]
+  }
+]
