@@ -8,6 +8,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import TypeVar
 
+from dotenv import load_dotenv
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.runnables import Runnable
@@ -21,7 +22,7 @@ Ask = Callable[[str, str, type[M]], M]  # (system, user, schema) -> an instance 
 
 MAX_REPLY_TOKENS = 4096  # Ollama: a stuck local model fails fast instead of generating for minutes
 CLAUDE_MAX_TOKENS = 16000  # Claude thinks before answering, and thinking counts as output
-KEY_FILE = Path("~/.config/groomroom/anthropic_key").expanduser()  # outside the repo, never committed; the project's old name
+ENV_FILE = Path(__file__).parent.parent / ".env"  # in .gitignore, so the key is never committed
 # $ per million tokens (input, output), for reporting what a run cost.
 PRICES = {"claude-haiku-5-5": (0.10, 0.50), "claude-sonnet-5-5": (2.00, 10.00), "claude-opus-5-5": (4.00, 20.00)}
 # Claude models that accept server-side refusal fallbacks in the "default" form.
@@ -55,12 +56,11 @@ def chat_model(provider: str, model: str | None = None, temperature: float = 0,
 
 
 def anthropic_key() -> str:
-    """ANTHROPIC_API_KEY, or the key file. Never printed or logged."""
+    """ANTHROPIC_API_KEY from the environment or .env. Never printed or logged."""
+    load_dotenv(ENV_FILE)  # a key already set in the environment wins
     if key := os.environ.get("ANTHROPIC_API_KEY", "").strip():
         return key
-    if KEY_FILE.exists():
-        return KEY_FILE.read_text().strip()
-    raise RuntimeError(f"No Anthropic API key: set ANTHROPIC_API_KEY or put the key in {KEY_FILE}")
+    raise RuntimeError("No Anthropic API key: set ANTHROPIC_API_KEY, or copy .env.example to .env and fill it in")
 
 
 def parse(chat: BaseChatModel, schema: type[BaseModel]) -> Runnable:
