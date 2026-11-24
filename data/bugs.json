@@ -1,0 +1,2088 @@
+[
+  {
+    "id": "bug-155",
+    "repo": "simonw/datasette",
+    "title": "Label column not shown for a primary key that is also a foreign key",
+    "body": "When a table's primary key column also has a foreign key to another table, the row doesn't show the referenced table's label for it. Other foreign key columns show their labels fine.",
+    "created_at": "2017-11-29T00:40:02Z",
+    "url": "https://github.com/simonw/datasette/issues/155",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "Body was empty; title reworded for clarity.",
+    "base_sha": "198b8b2955b9d8a8a80ce850a92a99426c5f161f",
+    "fix_shas": [
+      "a2b954e82818d5aa4b4c313d9a687d6a7bdd04b5"
+    ],
+    "source_files": [
+      "datasette/app.py"
+    ],
+    "test_files": [],
+    "locations": [
+      {
+        "file": "datasette/app.py",
+        "function": "RowTableShared.make_display_rows",
+        "names": [
+          "make_display_rows"
+        ],
+        "start": 396,
+        "end": 476,
+        "lines": [
+          425,
+          445,
+          447
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-216",
+    "repo": "simonw/datasette",
+    "title": "Sorting by a column with NULLs breaks the next page",
+    "body": "I sorted my salaries table by middle initial, and many middle initials are null. The next page link Datasette generates is:\n\nhttp://localhost:8001/salaries-d3a5631/2017+Maryland+state+salaries?_next=None%2C391&_sort=middle_initial\n\nFollowing it, the second page seems to look for people whose middle initial is literally \"None\" and skips ahead to the Os.",
+    "created_at": "2018-04-16T14:03:18Z",
+    "url": "https://github.com/simonw/datasette/issues/216",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "1652a9707e325b387ab9550e78eefd48029be44f",
+    "fix_shas": [
+      "2abe539a0f9f967ec0de6894774cb7ee83c4b3b9",
+      "5364fa7f3357f2de24fd45c85832205377642f19"
+    ],
+    "source_files": [
+      "datasette/app.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/app.py",
+        "function": "TableView.data",
+        "names": [
+          "data"
+        ],
+        "start": 588,
+        "end": 922,
+        "lines": [
+          741,
+          763,
+          764,
+          765,
+          766,
+          767,
+          768,
+          770,
+          771,
+          826,
+          827,
+          828,
+          829,
+          742,
+          743,
+          744,
+          766,
+          767,
+          768,
+          769,
+          770,
+          771,
+          772,
+          773,
+          774,
+          775,
+          776,
+          777,
+          778,
+          779,
+          780,
+          781,
+          782,
+          783,
+          784,
+          785,
+          786,
+          787,
+          788,
+          789,
+          790,
+          791,
+          792,
+          794,
+          849,
+          850,
+          851,
+          852,
+          853,
+          854
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-334",
+    "repo": "simonw/datasette",
+    "title": "--extra-options ignored when publishing to Heroku",
+    "body": "I wasn't able to publish to Heroku with `--extra-options`: the options I pass don't seem to have any effect on the deployed server.",
+    "created_at": "2018-07-06T23:26:12Z",
+    "url": "https://github.com/simonw/datasette/issues/334",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "Link to the line in utils.py the reporter suspected.",
+    "base_sha": "6df6f712b36f0fe75694174906e31242427a8d1d",
+    "fix_shas": [
+      "17863d108b9c8672b5e102d97858a96ca715a9d6"
+    ],
+    "source_files": [
+      "datasette/utils.py"
+    ],
+    "test_files": [],
+    "locations": [
+      {
+        "file": "datasette/utils.py",
+        "function": "temporary_heroku_directory",
+        "names": [
+          "temporary_heroku_directory"
+        ],
+        "start": 368,
+        "end": 457,
+        "lines": [
+          435
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-393",
+    "repo": "simonw/datasette",
+    "title": "CSV in the Advanced export pane ignores the filters",
+    "body": "Looking at songs released in 1989 in the `classic-rock/classic-rock-song-list` table (filtered with `Release+Year__exact=1989` in the URL), the JSON and CSV links at the top of the page both give me the filtered rows. In the \"Advanced export\" pane, the JSON options keep the filter, but the CSV option gives me the whole table.\n\nIf this is intended, it should be clearer.",
+    "created_at": "2019-01-02T12:39:41Z",
+    "url": "https://github.com/simonw/datasette/issues/393",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "Link to an older streaming-CSV issue the reporter guessed was related.",
+    "base_sha": "8b8ae55e7c8b9e1dceef53f55a330b596ca44d41",
+    "fix_shas": [
+      "996e8822d2cb551c0ed821ff1fda24af905332d3"
+    ],
+    "source_files": [
+      "datasette/templates/table.html",
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/templates/table.html",
+        "function": null,
+        "names": [],
+        "start": null,
+        "end": null,
+        "lines": [
+          151,
+          152,
+          153,
+          154
+        ]
+      },
+      {
+        "file": "datasette/views/base.py",
+        "function": "BaseView.view_get",
+        "names": [
+          "view_get"
+        ],
+        "start": 301,
+        "end": 489,
+        "lines": [
+          467
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-503",
+    "repo": "simonw/datasette",
+    "title": "Database with a space in its name gives a 404",
+    "body": "I named my SQLite database \"Government workers\" and published it to Heroku. Clicking the database on the index page leads to a 404: `Database not found: Government%20workers`.",
+    "created_at": "2019-06-06T21:20:59Z",
+    "url": "https://github.com/simonw/datasette/issues/503",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "52fa79c6075f0830ff635b81d957c64d877a05aa",
+    "fix_shas": [
+      "931bfc66613aa3e22f8314df5c0d0758baf31f38"
+    ],
+    "source_files": [
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_api.py",
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/base.py",
+        "function": "DataView.resolve_db_name",
+        "names": [
+          "resolve_db_name"
+        ],
+        "start": 193,
+        "end": 254,
+        "lines": [
+          206,
+          211
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-558",
+    "repo": "simonw/datasette",
+    "title": "Exception for URLs with non-Latin characters",
+    "body": "I defined custom queries in `metadata.json` whose names are in Chinese, so the URLs look like `http://127.0.0.1:8001/mydb/测试查询`. Opening one throws an exception:\n\n```\nTraceback (most recent call last):\n  File \".../datasette/utils/asgi.py\", line 100, in __call__\n    return await view(new_scope, receive, send)\n  File \".../datasette/utils/asgi.py\", line 172, in view\n    request, **scope[\"url_route\"][\"kwargs\"]\n  File \".../datasette/views/base.py\", line 267, in get\n    request, database, hash, correct_hash_provided, **kwargs\n  File \".../datasette/views/base.py\", line 471, in view_get\n    for key in self.ds.renderers.keys()\n  File \".../datasette/views/base.py\", line 471, in <dictcomp>\n    for key in self.ds.renderers.keys()\n  File \".../datasette/utils/__init__.py\", line 655, in path_with_format\n    path = request.path\n  File \".../datasette/utils/asgi.py\", line 49, in path\n    self.scope.get(\"raw_path\", self.scope[\"path\"].encode(\"latin-1\"))\nUnicodeEncodeError: 'latin-1' codec can't encode characters in position 9-11: ordinal not in range(256)\n```\n\nThis used to work in earlier versions.",
+    "created_at": "2019-07-12T04:43:24Z",
+    "url": "https://github.com/simonw/datasette/issues/558",
+    "reporter": "outside",
+    "traceback": true,
+    "removed": null,
+    "base_sha": "5ed450a3328bd6a6a918474eeb5446d8a704df1c",
+    "fix_shas": [
+      "90d4f497f9b3f6a5882937c91fddb496ac3e7368"
+    ],
+    "source_files": [
+      "datasette/utils/asgi.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/utils/asgi.py",
+        "function": "Request.path",
+        "names": [
+          "path"
+        ],
+        "start": 46,
+        "end": 50,
+        "lines": [
+          48,
+          49,
+          50
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-597",
+    "repo": "simonw/datasette",
+    "title": "Can't visit /foo-bar when foo.db is also attached",
+    "body": "If one database is called `foo.db` and another `foo-bar.db`, visiting `/foo-bar` redirects to `/foo`.",
+    "created_at": "2019-10-16T20:07:41Z",
+    "url": "https://github.com/simonw/datasette/issues/597",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "b6ad1fdc7068cb8248787843e7438d1f19fa2e3a",
+    "fix_shas": [
+      "b647b5efc29300f715ba656e41b0591f342938e1"
+    ],
+    "source_files": [
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/base.py",
+        "function": "DataView.resolve_db_name",
+        "names": [
+          "resolve_db_name"
+        ],
+        "start": 193,
+        "end": 254,
+        "lines": [
+          196,
+          197,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-689",
+    "repo": "simonw/datasette",
+    "title": "\"Templates considered\" comment missing since 0.35",
+    "body": "The \"Templates considered\" HTML comment is missing in 0.37. It's there on https://v0-34.datasette.io/ but not on https://v0-35.datasette.io/. The template context debug output differs between the two:\n\n```diff\n<     \"datasette_version\": \"0.34\",\n<     \"app_css_hash\": \"ffa51a\",\n<     \"select_templates\": [\n<         \"*index.html\"\n<     ],\n<     \"zip\": \"<class 'zip'>\",\n<     \"body_scripts\": [],\n<     \"extra_css_urls\": \"<generator object BaseView._asset_urls at 0x7f6529ac05f0>\",\n<     \"extra_js_urls\": \"<generator object BaseView._asset_urls at 0x7f6529ac0660>\",\n<     \"format_bytes\": \"<function format_bytes at 0x7f652a1588b0>\",\n<     \"database_url\": \"<bound method BaseView.database_url of <datasette.views.index.IndexView object at 0x7f6529b03e50>>\",\n<     \"database_color\": \"<bound method BaseView.database_color of <datasette.views.index.IndexView object at 0x7f6529b03e50>>\"\n---\n>     \"datasette_version\": \"0.35\",\n>     \"database_url\": \"<bound method BaseView.database_url of <datasette.views.index.IndexView object at 0x7f6140dacd90>>\",\n>     \"database_color\": \"<bound method BaseView.database_color of <datasette.views.index.IndexView object at 0x7f6140dacd90>>\"\n```",
+    "created_at": "2020-03-01T17:31:21Z",
+    "url": "https://github.com/simonw/datasette/issues/689",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The issue number of the change the reporter traced it to.",
+    "base_sha": "e89b0ef2f9ae89eb3bde83b694f21452ea4858da",
+    "fix_shas": [
+      "d55fe8cdfc2ce7bc6960bf2507766c1fcd1d31a7"
+    ],
+    "source_files": [
+      "datasette/app.py",
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/app.py",
+        "function": "Datasette.render_template",
+        "names": [
+          "render_template"
+        ],
+        "start": 555,
+        "end": 621,
+        "lines": [
+          561,
+          566,
+          567,
+          568,
+          569,
+          570,
+          571,
+          606
+        ]
+      },
+      {
+        "file": "datasette/views/base.py",
+        "function": "BaseView.render",
+        "names": [
+          "render"
+        ],
+        "start": 75,
+        "end": 88,
+        "lines": [
+          81
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-752",
+    "repo": "simonw/datasette",
+    "title": "Custom pages and error pages break non-ASCII characters",
+    "body": "Custom pages (templates in `pages/`) and the 404 and 500 error pages show non-ASCII characters garbled, as if the page weren't sent as UTF-8. Normal database and table pages are fine.",
+    "created_at": "2020-05-04T12:24:42Z",
+    "url": "https://github.com/simonw/datasette/issues/752",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reporter's guess that these responses are encoded as latin-1, and that they skip the router.",
+    "base_sha": "450d2e2896e07a8ce27f1cf143febe280c97301b",
+    "fix_shas": [
+      "9424687e9e94401438896116898a071702b09d40"
+    ],
+    "source_files": [
+      "datasette/app.py",
+      "datasette/utils/asgi.py"
+    ],
+    "test_files": [
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/app.py",
+        "function": "DatasetteRouter.handle_404",
+        "names": [
+          "handle_404"
+        ],
+        "start": 788,
+        "end": 845,
+        "lines": [
+          831
+        ]
+      },
+      {
+        "file": "datasette/utils/asgi.py",
+        "function": "AsgiRouter.handle_404",
+        "names": [
+          "handle_404"
+        ],
+        "start": 128,
+        "end": 136,
+        "lines": [
+          133
+        ]
+      },
+      {
+        "file": "datasette/utils/asgi.py",
+        "function": "AsgiRouter.handle_500",
+        "names": [
+          "handle_500"
+        ],
+        "start": 138,
+        "end": 147,
+        "lines": [
+          143,
+          147
+        ]
+      },
+      {
+        "file": "datasette/utils/asgi.py",
+        "function": "asgi_send_html",
+        "names": [
+          "asgi_send_html"
+        ],
+        "start": 259,
+        "end": 263,
+        "lines": [
+          262
+        ]
+      },
+      {
+        "file": "datasette/utils/asgi.py",
+        "function": "asgi_send_redirect",
+        "names": [
+          "asgi_send_redirect"
+        ],
+        "start": 266,
+        "end": 273,
+        "lines": [
+          272
+        ]
+      },
+      {
+        "file": "datasette/utils/asgi.py",
+        "function": "asgi_send",
+        "names": [
+          "asgi_send"
+        ],
+        "start": 276,
+        "end": 278,
+        "lines": [
+          278
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-837",
+    "repo": "simonw/datasette",
+    "title": "Plugin $env secrets don't work inside lists",
+    "body": "This plugin configuration doesn't work: the `$env` value isn't replaced by the environment variable.\n\n```json\n{\n    \"plugins\": {\n        \"datasette-auth-tokens\": [\n            {\n                \"token\": {\"$env\": \"BOT_TOKEN\"},\n                \"actor\": {\"bot_id\": \"my-bot\"}\n            }\n        ]\n    }\n}\n```",
+    "created_at": "2020-06-11T22:59:54Z",
+    "url": "https://github.com/simonw/datasette/issues/837",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "f39f11133126158e28780dee91bb9c7719ef5875",
+    "fix_shas": [
+      "fba8ff6e76253af2b03749ed8dd6e28985a7fb8f"
+    ],
+    "source_files": [
+      "datasette/app.py",
+      "datasette/utils/__init__.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_plugins.py",
+      "tests/test_utils.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/app.py",
+        "function": "Datasette.plugin_config",
+        "names": [
+          "plugin_config"
+        ],
+        "start": 361,
+        "end": 382,
+        "lines": [
+          370,
+          371,
+          372,
+          373,
+          374,
+          375,
+          376,
+          377,
+          378,
+          379,
+          380,
+          381
+        ]
+      },
+      {
+        "file": "datasette/utils/__init__.py",
+        "function": "check_visibility",
+        "names": [
+          "check_visibility"
+        ],
+        "start": 896,
+        "end": 906,
+        "lines": [
+          906
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-914",
+    "repo": "simonw/datasette",
+    "title": "_nl=on fails for binary data",
+    "body": "https://latest.datasette.io/fixtures/binary_data.json?_sort_desc=data&_shape=array works. Adding `&_nl=on` returns:\n\n```json\n{\"ok\": false, \"error\": \"Object of type bytes is not JSON serializable\", \"status\": 500, \"title\": null}\n```",
+    "created_at": "2020-08-01T17:43:10Z",
+    "url": "https://github.com/simonw/datasette/issues/914",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "3a4c8ed36aa97211e46849d32a09f2f386f342dd",
+    "fix_shas": [
+      "8e7e6458a6787a06a4488798bd643dd7728b8a5b"
+    ],
+    "source_files": [
+      "datasette/renderer.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_api.py",
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/renderer.py",
+        "function": "json_renderer",
+        "names": [
+          "json_renderer"
+        ],
+        "start": 29,
+        "end": 92,
+        "lines": [
+          87
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-963",
+    "repo": "simonw/datasette",
+    "title": "Applying filters drops array facets",
+    "body": "Faceting by a JSON array column facets on the array's elements. But after pressing \"Apply\" (for example when removing a filter), the facet switches to whole arrays.\n\nTo reproduce: open https://latest.datasette.io/fixtures/facetable?_sort=pk&_facet=created&_facet=tags&_facet_array=tags and press \"Apply\". The \"tags\" facet values are now arrays, not array elements, and `&_facet_array=tags` is gone from the URL.",
+    "created_at": "2020-09-12T01:49:17Z",
+    "url": "https://github.com/simonw/datasette/issues/963",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "20b1de86a1e95e3f98215f17a247cba5311007ae",
+    "fix_shas": [
+      "ea340cf320a2566d24517fb4a0c9852c5059e771"
+    ],
+    "source_files": [
+      "datasette/templates/table.html",
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/templates/table.html",
+        "function": null,
+        "names": [],
+        "start": null,
+        "end": null,
+        "lines": [
+          91,
+          92,
+          93
+        ]
+      },
+      {
+        "file": "datasette/views/table.py",
+        "function": "TableView.data.extra_template",
+        "names": [
+          "data",
+          "extra_template"
+        ],
+        "start": 762,
+        "end": 832,
+        "lines": [
+          780
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-967",
+    "repo": "simonw/datasette",
+    "title": "Writable canned queries with magic parameters fail on an empty POST",
+    "body": "Posting with `?_json=1` to a writable canned query that uses magic parameters (like `:_actor_id`), with an empty body, fails: `Incorrect number of bindings supplied. The current statement uses 1, and there are 0 supplied`.",
+    "created_at": "2020-09-15T16:14:43Z",
+    "url": "https://github.com/simonw/datasette/issues/967",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": "Issue numbers of the two features involved; described in words.",
+    "base_sha": "65ca17d729182277b8fbf81825ec90814ef24d6e",
+    "fix_shas": [
+      "448d13ea6b15a9c5c9165a4f6049d073f1524a5e"
+    ],
+    "source_files": [
+      "datasette/views/database.py"
+    ],
+    "test_files": [
+      "tests/test_canned_queries.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/database.py",
+        "function": "MagicParameters",
+        "names": [
+          "MagicParameters"
+        ],
+        "start": 364,
+        "end": 383,
+        "lines": [
+          373
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1011",
+    "repo": "simonw/datasette",
+    "title": "Column header links broken in 0.50.1",
+    "body": "After upgrading from 0.49 to 0.50.1, the links on column headers are broken. In the page source they start with \"//\" with no host or port, instead of including base_url like other links on the page. The links in each column's cog menu work. I don't have custom templates.",
+    "created_at": "2020-10-10T03:37:51Z",
+    "url": "https://github.com/simonw/datasette/issues/1011",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "6fe30c348c58a0bc312552fd7a889731427b86e5",
+    "fix_shas": [
+      "7239175f63d150356a7f795cc4cabf7764d2cf68"
+    ],
+    "source_files": [
+      "datasette/templates/_table.html"
+    ],
+    "test_files": [
+      "tests/test_html.py",
+      "tests/test_plugins.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/templates/_table.html",
+        "function": null,
+        "names": [],
+        "start": null,
+        "end": null,
+        "lines": [
+          11,
+          13
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1100",
+    "repo": "simonw/datasette",
+    "title": "OPTIONS request to a database or table fails",
+    "body": "An OPTIONS request against a database or table fails with an internal error:\n\n```\ncurl -XOPTIONS http://127.0.0.1:8001/test-db\ncurl -XOPTIONS http://127.0.0.1:8001/test-db/table1\ncurl -XOPTIONS http://127.0.0.1:8001/test-db/table1\\?_search\\=test\n```\n\n```\nTraceback (most recent call last):\n  File \"[path-to-python]/site-packages/datasette/app.py\", line 1033, in route_path\n    response = await view(request, send)\n  File \"[path-to-python]/site-packages/datasette/views/base.py\", line 146, in view\n    request, **request.scope[\"url_route\"][\"kwargs\"]\n  File \"[path-to-python]/site-packages/datasette/views/base.py\", line 118, in dispatch_request\n    return await handler(request, *args, **kwargs)\nTypeError: object Response can't be used in 'await' expression\n```",
+    "created_at": "2020-11-20T18:16:43Z",
+    "url": "https://github.com/simonw/datasette/issues/1100",
+    "reporter": "outside",
+    "traceback": true,
+    "removed": "The reporter's working fix (making the options handler async).",
+    "base_sha": "daae35be46ec5cb8a207aa20986a4fa62e94777e",
+    "fix_shas": [
+      "a45a3dff3ea01a2382dcedae5923a7b821a12aec"
+    ],
+    "source_files": [
+      "datasette/utils/testing.py",
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/utils/testing.py",
+        "function": "TestClient",
+        "names": [
+          "TestClient"
+        ],
+        "start": 47,
+        "end": 133,
+        "lines": [
+          101
+        ]
+      },
+      {
+        "file": "datasette/views/base.py",
+        "function": "DataView.options",
+        "names": [
+          "options"
+        ],
+        "start": 158,
+        "end": 162,
+        "lines": [
+          158
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1134",
+    "repo": "simonw/datasette",
+    "title": "_searchmode=raw with _search_COLUMN gives index out of range",
+    "body": "Using `_searchmode=raw` (for wildcard searching) together with `_search_title=` fails with \"list index out of range\": `/db/cases?_searchmode=raw&_search_title=sundhedsfrem*`. With the plain `_search=` argument, `_searchmode=raw` and wildcards work.\n\n```\nTraceback (most recent call last):\n  File \".../datasette/utils/asgi.py\", line 122, in route_path\n    return await view(new_scope, receive, send)\n  File \".../datasette/utils/asgi.py\", line 196, in view\n    request, **scope[\"url_route\"][\"kwargs\"]\n  File \".../datasette/views/base.py\", line 204, in get\n    request, database, hash, correct_hash_provided, **kwargs\n  File \".../datasette/views/base.py\", line 342, in view_get\n    request, database, hash, **kwargs\n  File \".../datasette/views/table.py\", line 393, in data\n    search_col = key.split(\"_search_\", 1)[1]\nIndexError: list index out of range\n```",
+    "created_at": "2020-12-09T13:05:37Z",
+    "url": "https://github.com/simonw/datasette/issues/1134",
+    "reporter": "outside",
+    "traceback": true,
+    "removed": null,
+    "base_sha": "fe86d853089f324f92daa950cc56f4052bf78f98",
+    "fix_shas": [
+      "6000d1a724d0e28cdb102e7be83eac07a00b41e8"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "TableView.data",
+        "names": [
+          "data"
+        ],
+        "start": 280,
+        "end": 912,
+        "lines": [
+          446
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1181",
+    "repo": "simonw/datasette",
+    "title": "Some database file names give \"Database not found: None\"",
+    "body": "I have a file named `test-database (1).sqlite`. The index page lists it correctly, but clicking any of its links gives `Error 404 Database not found: None`. Renaming the file to `database (1).sqlite` makes the error go away.\n\n```\n$ datasette test-database\\ \\(1\\).sqlite\n...\nINFO:     127.0.0.1:54043 - \"GET / HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:54044 - \"GET /test-database (1) HTTP/1.1\" 404 Not Found\n```\n\nVersion 0.53.",
+    "created_at": "2021-01-07T12:01:16Z",
+    "url": "https://github.com/simonw/datasette/issues/1181",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "Link to the line the reporter suspected and their note that the dash matters.",
+    "base_sha": "07e163561592c743e4117f72102fcd350a600909",
+    "fix_shas": [
+      "a5ede3cdd455e2bb1a1fb2f4e1b5a9855caf5179"
+    ],
+    "source_files": [
+      "datasette/url_builder.py",
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/test_api.py",
+      "tests/test_cli.py",
+      "tests/test_html.py",
+      "tests/test_internals_urls.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/url_builder.py",
+        "function": "Urls.database",
+        "names": [
+          "database"
+        ],
+        "start": 30,
+        "end": 36,
+        "lines": [
+          33,
+          35
+        ]
+      },
+      {
+        "file": "datasette/views/base.py",
+        "function": "DataView.resolve_db_name",
+        "names": [
+          "resolve_db_name"
+        ],
+        "start": 181,
+        "end": 243,
+        "lines": [
+          183,
+          194
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1228",
+    "repo": "simonw/datasette",
+    "title": "500 error on a table page for some imported CSVs",
+    "body": "For some databases created from CSV or TSV files, visiting the table page gives a 500 error. I couldn't find anything in the files that explains it, or any difference between files that work and files that don't.\n\n```\nTraceback (most recent call last):\n  File \".../datasette/app.py\", line 1099, in route_path\n    response = await view(request, send)\n  File \".../datasette/views/base.py\", line 147, in view\n    request, **request.scope[\"url_route\"][\"kwargs\"]\n  File \".../datasette/views/base.py\", line 121, in dispatch_request\n    return await handler(request, *args, **kwargs)\n  File \".../datasette/views/base.py\", line 260, in get\n    request, database, hash, correct_hash_provided, **kwargs\n  File \".../datasette/views/base.py\", line 434, in view_get\n    request, database, hash, **kwargs\n  File \".../datasette/views/table.py\", line 782, in data\n    suggested_facets.extend(await facet.suggest())\n  File \".../datasette/facets.py\", line 168, in suggest\n    and any(r[\"n\"] > 1 for r in distinct_values)\n  File \".../datasette/facets.py\", line 168, in <genexpr>\n    and any(r[\"n\"] > 1 for r in distinct_values)\nTypeError: '>' not supported between instances of 'str' and 'int'\nINFO:     127.0.0.1:56402 - \"GET /databasetest/databasetest HTTP/1.1\" 500 Internal Server Error\n```",
+    "created_at": "2021-02-17T17:41:20Z",
+    "url": "https://github.com/simonw/datasette/issues/1228",
+    "reporter": "outside",
+    "traceback": true,
+    "removed": "Original title named the cause (a column called `n`); server log lines unrelated to the error.",
+    "base_sha": "32963018e7edfab1233de7c7076c428d0e5c7813",
+    "fix_shas": [
+      "4e47a2d894b96854348343374c8e97c9d7055cf6"
+    ],
+    "source_files": [
+      "datasette/facets.py"
+    ],
+    "test_files": [
+      "tests/fixtures.py",
+      "tests/test_api.py",
+      "tests/test_csv.py",
+      "tests/test_internals_database.py",
+      "tests/test_plugins.py",
+      "tests/test_table_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/facets.py",
+        "function": "ColumnFacet.suggest",
+        "names": [
+          "suggest"
+        ],
+        "start": 144,
+        "end": 193,
+        "lines": [
+          154,
+          156,
+          157
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1238",
+    "repo": "simonw/datasette",
+    "title": "Custom pages don't work with base_url",
+    "body": "Custom pages don't route when the `base_url` setting is used (Datasette 0.55).\n\n```\nmkdir -p templates/pages/\necho \"Hello, world!\" > templates/pages/custom.html\ndatasette --template-dir templates/\n```\n\nhttp://localhost:8001/custom shows \"Hello, world!\". Now start it with `--setting base_url /prefix/`: http://localhost:8001/prefix/custom gives a \"Database not found: custom\" 404. (http://localhost:8001/custom still works, as all routes do.)",
+    "created_at": "2021-02-22T21:58:58Z",
+    "url": "https://github.com/simonw/datasette/issues/1238",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "6e9b07be92905011211d8df7a872fb7c1f2737b2",
+    "fix_shas": [
+      "a63412152518581c6a3d4e142b937e27dabdbfdb"
+    ],
+    "source_files": [
+      "datasette/app.py",
+      "datasette/utils/testing.py"
+    ],
+    "test_files": [
+      "tests/test_custom_pages.py",
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/app.py",
+        "function": "DatasetteRouter.route_path",
+        "names": [
+          "route_path"
+        ],
+        "start": 1087,
+        "end": 1133,
+        "lines": [
+          1091
+        ]
+      },
+      {
+        "file": "datasette/app.py",
+        "function": "DatasetteRouter.handle_404",
+        "names": [
+          "handle_404"
+        ],
+        "start": 1135,
+        "end": 1213,
+        "lines": [
+          1146,
+          1147,
+          1148,
+          1156
+        ]
+      },
+      {
+        "file": "datasette/app.py",
+        "function": "DatasetteClient._fix",
+        "names": [
+          "_fix"
+        ],
+        "start": 1359,
+        "end": 1364,
+        "lines": [
+          1359,
+          1360
+        ]
+      },
+      {
+        "file": "datasette/app.py",
+        "function": "DatasetteClient.request",
+        "names": [
+          "request"
+        ],
+        "start": 1394,
+        "end": 1396,
+        "lines": [
+          1394,
+          1396
+        ]
+      },
+      {
+        "file": "datasette/utils/testing.py",
+        "function": "TestClient._request",
+        "names": [
+          "_request"
+        ],
+        "start": 125,
+        "end": 156,
+        "lines": [
+          142
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1239",
+    "repo": "simonw/datasette",
+    "title": "JSON array filter fails on a column with spaces in its name",
+    "body": "Filtering by an array value on a column called `Availability Info` fails:\n\n`sql = 'select ... from locations where rowid in (select locations.rowid from locations, json_each(locations.Availability Info) j where j.value = :p0) and \"Latest report yes\" = :p1 order by id limit 101', params = {'p0': 'Yes: appointment required', 'p1': '1'}: near \"Info\": syntax error`",
+    "created_at": "2021-02-23T00:18:07Z",
+    "url": "https://github.com/simonw/datasette/issues/1239",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": "Long column list shortened.",
+    "base_sha": "42caabf7e9e6e4d69ef6dd7de16f2cd96bc79d5b",
+    "fix_shas": [
+      "726f781c50e88f557437f6490b8479c3d6fabfc2"
+    ],
+    "source_files": [
+      "datasette/filters.py"
+    ],
+    "test_files": [
+      "tests/test_filters.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/filters.py",
+        "function": "Filters",
+        "names": [
+          "Filters"
+        ],
+        "start": 94,
+        "end": 280,
+        "lines": [
+          153,
+          162
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1470",
+    "repo": "simonw/datasette",
+    "title": "Searching from page 2 gives a 500 error",
+    "body": "- Go to the second page of a table: https://cryptics.eigenfoo.xyz/clues/clues?_next=100\n- Search for anything with the search box, e.g. `hello`, which takes you to https://cryptics.eigenfoo.xyz/clues/clues?_search=hello&_sort=rowid&_next=100\n- A `500 Error: list index out of range` is raised.\n\nRemoving `&_next=100` from the URL returns the search results. Datasette 0.58.1.",
+    "created_at": "2021-09-13T16:36:15Z",
+    "url": "https://github.com/simonw/datasette/issues/1470",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reporter's explanation (no second page of results exists) and proposed fix (strip _next when searching).",
+    "base_sha": "1163da89163f357003007b14f458a2c28f2e0a8e",
+    "fix_shas": [
+      "875117c343e454221ef023be6ad977fdaea3ceda"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "TableView.data",
+        "names": [
+          "data"
+        ],
+        "start": 324,
+        "end": 981,
+        "lines": [
+          590,
+          596,
+          597
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1547",
+    "repo": "simonw/datasette",
+    "title": "Writable canned queries don't use their custom template",
+    "body": "I have a canned query with `\"write\": true` and a custom template for it, but the template isn't used. The HTML shows (`stock_exchange` is the database):\n\n`<!-- Templates considered: query-stock_exchange.html, *query.html -->`\n\nMy read-only canned queries pick up custom templates, and their HTML includes the query name (`date_search` here):\n\n`<!-- Templates considered: query-stock_exchange-date_search.html, query-stock_exchange.html, *query.html -->`\n\nI'm signed in with `--root`, in case that matters.",
+    "created_at": "2021-12-10T03:31:48Z",
+    "url": "https://github.com/simonw/datasette/issues/1547",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "5fac26aa221a111d7633f2dd92014641f7c0ade9",
+    "fix_shas": [
+      "4094741c2881c2ada3f3f878b532fdaec7914953"
+    ],
+    "source_files": [
+      "datasette/views/database.py"
+    ],
+    "test_files": [
+      "tests/test_canned_queries.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/database.py",
+        "function": "QueryView.data",
+        "names": [
+          "data"
+        ],
+        "start": 191,
+        "end": 484,
+        "lines": [
+          248,
+          343,
+          344,
+          345,
+          346,
+          347,
+          348
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1588",
+    "repo": "simonw/datasette",
+    "title": "explain query plan rejected with extra whitespace",
+    "body": "`explain query plan select * from facetable` is allowed in the SQL editor. With two spaces before `select` (`explain query plan  select * from facetable`) it returns \"Statement must be a SELECT\".",
+    "created_at": "2022-01-09T04:22:42Z",
+    "url": "https://github.com/simonw/datasette/issues/1588",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "8c401ee0f054de2f568c3a8302c9223555146407",
+    "fix_shas": [
+      "63537dd3decfd59636f4a42b336785ef49f0cec0"
+    ],
+    "source_files": [
+      "datasette/utils/__init__.py"
+    ],
+    "test_files": [
+      "tests/test_utils.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/utils/__init__.py",
+        "function": null,
+        "names": [],
+        "start": null,
+        "end": null,
+        "lines": [
+          165,
+          166,
+          168,
+          169
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1728",
+    "repo": "simonw/datasette",
+    "title": "Writable canned query silently does nothing on Cloud Run",
+    "body": "- I have a writable canned query that updates rows.\n- I sign in with the datasette-auth-github plugin, and `allow` on the query accepts my GitHub id and organisation.\n- Signing in works the same locally and on Cloud Run: `/-/actor` gives the same result.\n- I can open the padlocked canned query in both places.\n\nThe query works locally. On Cloud Run, submitting it redirects back to the query page and the database is unchanged. There's no error on the page or in the logs.",
+    "created_at": "2022-04-28T03:10:34Z",
+    "url": "https://github.com/simonw/datasette/issues/1728",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "1563c22a8c65e6cff5194aa07df54d0ab8d4eecb",
+    "fix_shas": [
+      "c1396bf86033a7bd99fa0c0431f585475391a11a"
+    ],
+    "source_files": [
+      "datasette/templates/query.html",
+      "datasette/views/database.py"
+    ],
+    "test_files": [
+      "tests/test_canned_queries.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/templates/query.html",
+        "function": null,
+        "names": [],
+        "start": null,
+        "end": null,
+        "lines": [
+          30,
+          64
+        ]
+      },
+      {
+        "file": "datasette/views/database.py",
+        "function": "QueryView.data",
+        "names": [
+          "data"
+        ],
+        "start": 203,
+        "end": 505,
+        "lines": [
+          275
+        ]
+      },
+      {
+        "file": "datasette/views/database.py",
+        "function": "QueryView.data.extra_template",
+        "names": [
+          "data",
+          "extra_template"
+        ],
+        "start": 326,
+        "end": 335,
+        "lines": [
+          328
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1773",
+    "repo": "simonw/datasette",
+    "title": "500 error sorting by a column not in ?_col=",
+    "body": "https://latest.datasette.io/fixtures/sortable?_sort_desc=sortable&_col=sortable_with_nulls returns a 500 error.",
+    "created_at": "2022-07-27T01:20:27Z",
+    "url": "https://github.com/simonw/datasette/issues/1773",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": "Screenshot.",
+    "base_sha": "8eb699de7becdefc6d72555d9fb17c9f06235dc4",
+    "fix_shas": [
+      "df4fd2d7ddca8956d8a51c72ce007b8c75227f32"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "TableView._data_traced",
+        "names": [
+          "_data_traced"
+        ],
+        "start": 159,
+        "end": 796,
+        "lines": [
+          633
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1950",
+    "repo": "simonw/datasette",
+    "title": "Bad ?_sort returns a 500",
+    "body": "https://latest.datasette.io/fixtures/facetable?_sort=bad returns a 500 error. It should be a 400.",
+    "created_at": "2022-12-13T22:08:16Z",
+    "url": "https://github.com/simonw/datasette/issues/1950",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": "Screenshot.",
+    "base_sha": "d4b98d3924dec625a99236e65b1b169ff957381f",
+    "fix_shas": [
+      "f84acae98ed99c3045d6a00e04cc72984cfa68dd"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "TableView._data_traced",
+        "names": [
+          "_data_traced"
+        ],
+        "start": 214,
+        "end": 875,
+        "lines": [
+          390,
+          394,
+          400
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1958",
+    "repo": "simonw/datasette",
+    "title": "--root in Docker doesn't reliably show the sign-in URL",
+    "body": "```\ndocker run datasetteproject/datasette pip install datasette-upload-csvs\ndocker commit $(docker ps -lq) datasette-with-plugins\ndocker run -p 8001:8001 -v $(pwd):/mnt datasette-with-plugins datasette --root -p 8001 -h 0.0.0.0\n```\n\nThe plugin is listed at /-/plugins, but /-/upload-csvs says I'm not allowed. The container output doesn't show me the URL to sign in as root, so I can't sign in. Ubuntu 22.04.1.",
+    "created_at": "2022-12-13T16:29:13Z",
+    "url": "https://github.com/simonw/datasette/issues/1958",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "Screenshots, described in words.",
+    "base_sha": "0b68996cc511b3a801f0cd0157bd66332d75f46f",
+    "fix_shas": [
+      "013496862f4d4b441ab61255242b838b24287607"
+    ],
+    "source_files": [
+      "datasette/cli.py"
+    ],
+    "test_files": [],
+    "locations": [
+      {
+        "file": "datasette/cli.py",
+        "function": "serve",
+        "names": [
+          "serve"
+        ],
+        "start": 345,
+        "end": 639,
+        "lines": [
+          621
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-1975",
+    "repo": "simonw/datasette",
+    "title": "_col=id exports the id column twice in CSV",
+    "body": "`/simonwillisonblog/blog_entry.csv?_col=id&_col=title&_col=body&_labels=on&_size=1` returns:\n\n```csv\nid,id,title,body\n1,1,WaSP Phase II,\"<p>The ...</p>\"\n```\n\nThere should be one `id` column.",
+    "created_at": "2023-01-03T00:25:15Z",
+    "url": "https://github.com/simonw/datasette/issues/1975",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "a913ba372a87ab6a61c16f35b7159aeb0f97160d",
+    "fix_shas": [
+      "463eea2bd0dabe48ec7f004ff96d78f3178183a5"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "_columns_to_select",
+        "names": [
+          "_columns_to_select"
+        ],
+        "start": 1598,
+        "end": 1627,
+        "lines": [
+          1609,
+          1610
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2123",
+    "repo": "simonw/datasette",
+    "title": "datasette serve --reload treats \"serve\" as a file",
+    "body": "```\n$ datasette serve --reload test_db\nStarting monitor for PID 13574.\nError: Invalid value for '[FILES]...': Path 'serve' does not exist.\n```\n\nIf I create a file called `serve`, it starts (with an empty database called serve). Running from main, version 1.0a2.",
+    "created_at": "2023-07-27T19:07:22Z",
+    "url": "https://github.com/simonw/datasette/issues/2123",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "24d801b7f799912cb4eb897a97e4f4a9fe76b966",
+    "fix_shas": [
+      "2bc1dd2275978e75622c5764729a4273ebac957e"
+    ],
+    "source_files": [
+      "datasette/cli.py"
+    ],
+    "test_files": [],
+    "locations": [
+      {
+        "file": "datasette/cli.py",
+        "function": "serve",
+        "names": [
+          "serve"
+        ],
+        "start": 348,
+        "end": 727,
+        "lines": [
+          550
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2214",
+    "repo": "simonw/datasette",
+    "title": "CSV export with ?_labels=on stops partway with an empty error",
+    "body": "I load the California SWITRS traffic collision data into Datasette and export it to CSV. The data uses code columns, and I create lookup tables and foreign keys for them: some lookup tables have integer keys, others have text keys (letters, sometimes blank or `-`).\n\n```\nfor TABLE in DAY_OF_WEEK CHP_SHIFT ...\ndo\n\tsqlite-utils create-table records.db $TABLE id integer name text --pk=id\n\tsqlite-utils insert records.db $TABLE lookup-tables/$TABLE.csv --csv\n\tsqlite-utils add-foreign-key records.db collisions $TABLE $TABLE id\ndone\n\nfor TABLE in WEATHER_1 WEATHER_2 LOCATION_TYPE ...\ndo\n\tsqlite-utils create-table records.db $TABLE key text name text --pk=key\n\tsqlite-utils insert records.db $TABLE lookup-tables/$TABLE.csv --csv\n\tsqlite-utils add-foreign-key records.db collisions $TABLE $TABLE key\ndone\n```\n\nWith only the integer foreign keys, everything works. With the text ones too, CSV export (the simple link or the Advanced export dialog) fails after a few rows. The only log output is:\n\n```\nINFO:     127.0.0.1:57885 - \"GET /records/collisions.csv?_facet=PRIMARY_RD&PRIMARY_RD=ASHBY+AV&_labels=on&_size=max HTTP/1.1\" 200 OK\nCaught this error:\n```\n\nfollowed by a blank line. I can't see what's special about the rows where it stops.",
+    "created_at": "2023-12-07T05:04:34Z",
+    "url": "https://github.com/simonw/datasette/issues/2214",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "978249beda1a3e7185f61000b0dd57018541c511",
+    "fix_shas": [
+      "872dae1e1a1511e2edfb9d7ddf6ea5096c11d5c3"
+    ],
+    "source_files": [
+      "datasette/views/base.py"
+    ],
+    "test_files": [
+      "tests/test_csv.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/base.py",
+        "function": "stream_csv.stream_fn",
+        "names": [
+          "stream_csv",
+          "stream_fn"
+        ],
+        "start": 485,
+        "end": 567,
+        "lines": [
+          556,
+          557,
+          558,
+          562,
+          563,
+          565
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2270",
+    "repo": "simonw/datasette",
+    "title": "Datasette fails on FIPS-enabled systems",
+    "body": "On a FIPS-enabled system Datasette fails with:\n\n```\nelse hashlib.md5(name.encode(\"utf8\")).hexdigest()[:6],\nValueError: [digital envelope routines] unsupported\n```",
+    "created_at": "2024-02-13T22:45:56Z",
+    "url": "https://github.com/simonw/datasette/issues/2270",
+    "reporter": "outside",
+    "traceback": true,
+    "removed": "The reporter's patch for two named files, and a note about the pint library.",
+    "base_sha": "5d7997418664bcdfdba714c16bd5a67c241e8740",
+    "fix_shas": [
+      "b89cac3b6a63929325c067d0cf2d5748e4bf4d2e"
+    ],
+    "source_files": [
+      "datasette/database.py",
+      "datasette/utils/__init__.py"
+    ],
+    "test_files": [],
+    "locations": [
+      {
+        "file": "datasette/database.py",
+        "function": "Database.color",
+        "names": [
+          "color"
+        ],
+        "start": 73,
+        "end": 77,
+        "lines": [
+          77
+        ]
+      },
+      {
+        "file": "datasette/utils/__init__.py",
+        "function": "to_css_class",
+        "names": [
+          "to_css_class"
+        ],
+        "start": 705,
+        "end": 725,
+        "lines": [
+          716
+        ]
+      },
+      {
+        "file": "datasette/utils/__init__.py",
+        "function": "redact_keys",
+        "names": [
+          "redact_keys"
+        ],
+        "start": 1379,
+        "end": 1403,
+        "lines": [
+          1403
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2389",
+    "repo": "simonw/datasette",
+    "title": "-s resets settings set in datasette.yaml",
+    "body": "```yaml\nsettings:\n  sql_time_limit_ms: 9999\n```\n\n```bash\n$ datasette --memory -c dbg-config.yaml --get '/-/settings.json' | jq\n{\n  \"sql_time_limit_ms\": 9999,\n  \"trace_debug\": false,\n  ...\n}\n$ datasette --memory -c dbg-config.yaml -s settings.trace_debug 1 --get '/-/settings.json' | jq\n{\n  \"sql_time_limit_ms\": 1000,\n  \"trace_debug\": 1,\n  ...\n}\n```\n\nPassing one setting with `-s` puts `sql_time_limit_ms` back to the default.",
+    "created_at": "2024-08-13T19:28:07Z",
+    "url": "https://github.com/simonw/datasette/issues/2389",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "f6bd2bf8b025dcee49248ae7224e242b448f558c",
+    "fix_shas": [
+      "bf953628bb629d0c287ecb6c93407b29d0239e27"
+    ],
+    "source_files": [
+      "datasette/cli.py",
+      "datasette/utils/__init__.py"
+    ],
+    "test_files": [
+      "tests/test_cli.py",
+      "tests/test_utils.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/cli.py",
+        "function": "serve",
+        "names": [
+          "serve"
+        ],
+        "start": 341,
+        "end": 656,
+        "lines": [
+          555
+        ]
+      },
+      {
+        "file": "datasette/utils/__init__.py",
+        "function": "calculate_etag",
+        "names": [
+          "calculate_etag"
+        ],
+        "start": 1438,
+        "end": 1453,
+        "lines": [
+          1453
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2446",
+    "repo": "simonw/datasette",
+    "title": "\"Queries took\" always says 1.2 ms",
+    "body": "In the footer of table pages I always see \"Queries took 1.2 ms\", whatever the query.",
+    "created_at": "2024-11-30T17:09:08Z",
+    "url": "https://github.com/simonw/datasette/issues/2446",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reporter's pointer to the line in views/table.py where it's hardcoded.",
+    "base_sha": "ffd3b8cada9e77e591adc049a98c37cc207536e3",
+    "fix_shas": [
+      "9cdf95ac2c47fe80bc368e2564f5554de1dc998a"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "table_view_traced",
+        "names": [
+          "table_view_traced"
+        ],
+        "start": 1776,
+        "end": 1989,
+        "lines": [
+          1803,
+          1813,
+          1960
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2470",
+    "repo": "simonw/datasette",
+    "title": "Link header URL should be in angle brackets",
+    "body": "The `link` response header isn't valid syntax: the URL should be in angle brackets (see MDN's Link header docs).\n\nCurrently:\n```\nlink: https://labordata.bunkum.us/.json; rel=\"alternate\"; type=\"application/json+datasette\"\n```\nShould be:\n```\nlink: <https://labordata.bunkum.us/.json>; rel=\"alternate\"; type=\"application/json+datasette\"\n```",
+    "created_at": "2025-02-28T17:48:24Z",
+    "url": "https://github.com/simonw/datasette/issues/2470",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "6e512caa597da610671ee5c696c9b65892eabb56",
+    "fix_shas": [
+      "333f786cb0b0255d6afdc50364a025646cf1e8e6"
+    ],
+    "source_files": [
+      "datasette/views/base.py",
+      "datasette/views/database.py",
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_canned_queries.py",
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/base.py",
+        "function": "BaseView.render",
+        "names": [
+          "render"
+        ],
+        "start": 139,
+        "end": 174,
+        "lines": [
+          161
+        ]
+      },
+      {
+        "file": "datasette/views/database.py",
+        "function": "DatabaseView.get",
+        "names": [
+          "get"
+        ],
+        "start": 41,
+        "end": 188,
+        "lines": [
+          184
+        ]
+      },
+      {
+        "file": "datasette/views/database.py",
+        "function": "QueryView.get",
+        "names": [
+          "get"
+        ],
+        "start": 442,
+        "end": 795,
+        "lines": [
+          633
+        ]
+      },
+      {
+        "file": "datasette/views/table.py",
+        "function": "table_view_traced",
+        "names": [
+          "table_view_traced"
+        ],
+        "start": 778,
+        "end": 943,
+        "lines": [
+          897
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2561",
+    "repo": "simonw/datasette",
+    "title": "Loading the same file twice gives a disk I/O error",
+    "body": "```bash\ndatasette data.db .\n```\n\nHere `.` picks up `data.db` a second time, and it fails with `Error: OperationalError: disk I/O error`.",
+    "created_at": "2025-10-31T04:22:19Z",
+    "url": "https://github.com/simonw/datasette/issues/2561",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "e4be95b16c99dd8d49fc6d89a684764bf731f1d9",
+    "fix_shas": [
+      "ba654b5576a6b1fd309e266dee0b9ae773271372"
+    ],
+    "source_files": [
+      "datasette/cli.py"
+    ],
+    "test_files": [
+      "tests/test_cli.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/cli.py",
+        "function": "serve",
+        "names": [
+          "serve"
+        ],
+        "start": 352,
+        "end": 670,
+        "lines": [
+          593,
+          594,
+          595,
+          596,
+          599,
+          610,
+          611
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2728",
+    "repo": "simonw/datasette",
+    "title": "Redirect from /db?sql= lacks CORS headers",
+    "body": "Queries like `/$DB?sql=` now redirect (302) to `/$DB/-/query`. With `--cors` enabled, the redirect response has no CORS headers, so browsers won't follow it. The redirect should probably also be a 301, not a 302.",
+    "created_at": "2026-05-21T23:46:17Z",
+    "url": "https://github.com/simonw/datasette/issues/2728",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "b9cb8e9a30417b66ad0f1ad04c926c3f2e6cf164",
+    "fix_shas": [
+      "b013aa1f7f133c93f7e2947d0224b4cd9fcd520a"
+    ],
+    "source_files": [
+      "datasette/views/database.py"
+    ],
+    "test_files": [
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/database.py",
+        "function": "DatabaseView.get",
+        "names": [
+          "get"
+        ],
+        "start": 42,
+        "end": 208,
+        "lines": [
+          64,
+          65
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2743",
+    "repo": "simonw/datasette",
+    "title": "/db/-/query with no parameters gives a 500",
+    "body": "https://latest.datasette.io/extra_database/-/query with no parameters returns a 500 error: `expected string or bytes-like object, got 'NoneType'`.",
+    "created_at": "2026-05-25T18:55:18Z",
+    "url": "https://github.com/simonw/datasette/issues/2743",
+    "reporter": "maintainer",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "6cafdcb6fa57cabe5352a471b6d4b469072beb72",
+    "fix_shas": [
+      "de55a76d402a6326c60a5f4cd1a03c7476613f0b"
+    ],
+    "source_files": [
+      "datasette/templates/query.html",
+      "datasette/views/database.py"
+    ],
+    "test_files": [
+      "tests/plugins/my_plugin.py",
+      "tests/test_html.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/templates/query.html",
+        "function": null,
+        "names": [],
+        "start": null,
+        "end": null,
+        "lines": [
+          49,
+          56
+        ]
+      },
+      {
+        "file": "datasette/views/database.py",
+        "function": "QueryView.get",
+        "names": [
+          "get"
+        ],
+        "start": 515,
+        "end": 876,
+        "lines": [
+          580,
+          605,
+          648,
+          774,
+          775,
+          776,
+          777,
+          778,
+          779,
+          780,
+          781,
+          782,
+          783,
+          784,
+          785,
+          786,
+          787,
+          788,
+          789,
+          790,
+          792
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2902",
+    "repo": "simonw/datasette",
+    "title": "CSV streaming a SQL view never ends",
+    "body": "In 1.0a38, streaming a **view** as CSV with `?_stream=on` never terminates. Streaming a **table** works. It works in 0.65.3.\n\n```python\nimport sqlite3\ncon = sqlite3.connect(\"repro.db\")\ncon.execute(\"CREATE TABLE base (id INTEGER PRIMARY KEY, name TEXT, val INTEGER)\")\ncon.executemany(\"INSERT INTO base VALUES (?, ?, ?)\", [(i, f\"row-{i}\", i * 7 % 1000) for i in range(1, 501)])\ncon.execute(\"CREATE VIEW v_base AS SELECT id, name, val FROM base\")\ncon.commit()\n```\n\n```\ndatasette repro.db --setting max_returned_rows 1000000\ncurl 'http://localhost:8001/repro/base.csv?_stream=on'     # 500 rows, ends\ncurl 'http://localhost:8001/repro/v_base.csv?_stream=on'   # never ends\n```\n\nIn a ~15s capture of the view it produced about 1.19M rows but only 200 distinct ids: rows 1-100 once, then rows 101-200 repeated until `max_csv_mb` cuts the response off.",
+    "created_at": "2026-09-09T07:53:19Z",
+    "url": "https://github.com/simonw/datasette/issues/2902",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "A long AI-written diagnosis naming the lines in views/table.py and views/base.py, and the guess about OFFSET pagination.",
+    "base_sha": "ea3edcc1b9729070cd57d6aaa66d47432fee472c",
+    "fix_shas": [
+      "920adc6880c03ec6a31ced777670d59c7033589c"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_csv.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "table_view_data",
+        "names": [
+          "table_view_data"
+        ],
+        "start": 2033,
+        "end": 2490,
+        "lines": [
+          2315,
+          2316
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-2974",
+    "repo": "simonw/datasette",
+    "title": "500 error sorting a table without a primary key by a hidden column",
+    "body": "On a table with no declared primary key, sorting by a column that's excluded from the output returns a 500:\n\n```\n/fixtures/no_primary_key.json?_nocol=b&_sort=b\n/fixtures/no_primary_key.json?_col=a&_sort=b\n/fixtures/no_primary_key.json?_nocol=b&_sort_desc=b\n```\n\nThe error is `sqlite3.OperationalError: incomplete input`. Without the exclusion (`?_sort=b`) it works, and tables with a primary key are fine: `/fixtures/sortable.json?_sort=text&_col=content` paginates correctly.",
+    "created_at": "2026-09-30T13:16:21Z",
+    "url": "https://github.com/simonw/datasette/issues/2974",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reporter's diagnosis naming the function, the malformed SQL, and the proposed fix.",
+    "base_sha": "cbaa72bdad1e939f3dc136db0695ccee5ef141ab",
+    "fix_shas": [
+      "779457f81525eb8329fab3b8f5bc51095faf96a5"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "_next_value_and_url",
+        "names": [
+          "_next_value_and_url"
+        ],
+        "start": 2836,
+        "end": 2898,
+        "lines": [
+          2862,
+          2864,
+          2873
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-3003",
+    "repo": "simonw/datasette",
+    "title": "_json ignores or replaces row values and breaks array shapes",
+    "body": "The table JSON endpoint doesn't decode fields selected with `_json`:\n\n```python\nimport asyncio\nfrom datasette.app import Datasette\n\nasync def main():\n    ds = Datasette()\n    db = ds.add_memory_database(\"demo\")\n    await db.execute_write(\"CREATE TABLE t (id integer primary key, value text)\")\n    await db.execute_write(\"INSERT INTO t VALUES (?, ?)\", [1, '[\"a\", \"b\"]'])\n    for suffix in (\"?_json=value\", \"?_json=value&_extra=columns\",\n                   \"?_json=value&_extra=columns&_shape=arrays\", \"?_json=value&_extra=columns&_shape=arrayfirst\"):\n        response = await ds.client.get(\"/demo/t.json\" + suffix)\n        print(response.status_code, response.text)\n\nasyncio.run(main())\n```\n\nThe first response keeps the JSON string. The second returns a row with id set to \"id\" and value set to \"value\". The last two return 500. I expected `value` to become a JSON array, with the other values and the output shape unchanged.",
+    "created_at": "2026-10-14T11:11:15Z",
+    "url": "https://github.com/simonw/datasette/issues/3003",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": null,
+    "base_sha": "2c5eb8e1cb6804b34122111306f4fd84b15c51ef",
+    "fix_shas": [
+      "030d4821f3da5a9a6a236ec27f9e527b1ad1fb93"
+    ],
+    "source_files": [
+      "datasette/renderer.py"
+    ],
+    "test_files": [
+      "tests/test_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/renderer.py",
+        "function": "convert_specific_columns_to_json",
+        "names": [
+          "convert_specific_columns_to_json"
+        ],
+        "start": 15,
+        "end": 30,
+        "lines": [
+          15,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      {
+        "file": "datasette/renderer.py",
+        "function": "json_renderer",
+        "names": [
+          "json_renderer"
+        ],
+        "start": 33,
+        "end": 123,
+        "lines": [
+          41,
+          43,
+          64,
+          65,
+          66,
+          67,
+          68,
+          86,
+          87,
+          99,
+          100,
+          101,
+          102
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-3035",
+    "repo": "simonw/datasette",
+    "title": "Numeric filters with huge integers give a 500",
+    "body": "A numeric comparison filter with an integer outside SQLite's 64-bit range returns a 500, e.g. `/db/items?score__gt=9223372036854775808`. The error is `OverflowError: Python int too large to convert to SQLite INTEGER`. A negative value below the minimum fails too.\n\nExpected: large finite numbers compared as floats, integers in range kept as integers, and non-finite inputs behaving as they do now.",
+    "created_at": "2026-11-06T17:04:42Z",
+    "url": "https://github.com/simonw/datasette/issues/3035",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reproduction called the filters class directly; restated as a URL. Links to related issues.",
+    "base_sha": "8b529de02fc9472189cc6600a8cbedd2123ad8fc",
+    "fix_shas": [
+      "b18dac219e99c076d8067bc9e82b4dec5bb4c24f"
+    ],
+    "source_files": [
+      "datasette/filters.py"
+    ],
+    "test_files": [
+      "tests/test_numeric_filter_values.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/filters.py",
+        "function": "_coerce_numeric_filter_value",
+        "names": [
+          "_coerce_numeric_filter_value"
+        ],
+        "start": 217,
+        "end": 225,
+        "lines": [
+          219,
+          221,
+          222,
+          223,
+          224,
+          225
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-3054",
+    "repo": "simonw/datasette",
+    "title": "Sorted pagination repeats or skips rows with a text or compound primary key",
+    "body": "With `?_sort=` or `?_sort_desc=` on a column with repeated values, following `next_url` can return the same row twice and never return others. It happens on tables whose primary key is text or compound; integer primary keys and rowid tables are fine.\n\n```python\nimport asyncio, sqlite3\nfrom datasette.app import Datasette\n\nc = sqlite3.connect(\"/tmp/repro.db\")\nc.executescript(\"\"\"\ncreate table membership (user_id text, group_id text, primary key (user_id, group_id));\ninsert into membership values\n  ('u9','g1'),('u8','g1'),('u1','g1'),('u5','g1'),('u2','g2'),('u7','g2');\n\"\"\")\nc.commit()\n\nasync def main():\n    ds = Datasette([\"/tmp/repro.db\"])\n    url, seen = \"/repro/membership.json?_size=2&_sort=group_id\", []\n    while url:\n        data = (await ds.client.get(url)).json()\n        seen += [row[\"user_id\"] for row in data[\"rows\"]]\n        url = data[\"next_url\"] and data[\"next_url\"].replace(\"http://localhost\", \"\")\n    print(seen)\n\nasyncio.run(main())\n```\n\nActual: `['u9', 'u8', 'u9', 'u2', 'u7']`. `u9` comes back twice; `u1` and `u5` never appear. Expected: all six rows, once each.",
+    "created_at": "2026-11-09T15:20:51Z",
+    "url": "https://github.com/simonw/datasette/issues/3054",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reporter's diagnosis naming the function and lines, the proposed diff, and their test results.",
+    "base_sha": "1a8cdb8f7194fa669cfaa14ec1cfac3b4e20d564",
+    "fix_shas": [
+      "fc67ea939ce50d507d6f39bf54e4827ff6f9b7f3"
+    ],
+    "source_files": [
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_api.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/views/table.py",
+        "function": "table_view_data",
+        "names": [
+          "table_view_data"
+        ],
+        "start": 2342,
+        "end": 2818,
+        "lines": [
+          2464,
+          2465
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-3056",
+    "repo": "simonw/datasette",
+    "title": "Sorted pagination skips or repeats rows for columns without a type",
+    "body": "Sorted pagination can skip or repeat rows when a column has no declared type:\n\n```sql\nCREATE TABLE numbers (id INTEGER PRIMARY KEY, value);\nINSERT INTO numbers VALUES (1,1),(2,2),(3,3),(4,4),(5,5);\n```\n\nWith `_size=2&_sort=value`, the table API returns 1 and 2, then an empty page when following `next_url`. With `_sort_desc=value`, following the links repeats 5 and 4. `CREATE TABLE AS SELECT` makes columns like this too. INTEGER and REAL columns paginate correctly. Columns mixing numbers and text also lose rows.",
+    "created_at": "2026-11-10T23:17:50Z",
+    "url": "https://github.com/simonw/datasette/issues/3056",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The reporter's explanation (the cursor stores the sort value as text) and suggested fix.",
+    "base_sha": "8666758d923117642128e03fe1db032f61eeda11",
+    "fix_shas": [
+      "a355c35b15f2e7f1e4801d51200cb8af721762be"
+    ],
+    "source_files": [
+      "datasette/tracer.py",
+      "datasette/views/table.py"
+    ],
+    "test_files": [
+      "tests/test_table_api.py",
+      "tests/test_table_pagination.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/tracer.py",
+        "function": "AsgiTracer.__call__.wrapped_send",
+        "names": [
+          "__call__",
+          "wrapped_send"
+        ],
+        "start": 101,
+        "end": 153,
+        "lines": [
+          145,
+          152
+        ]
+      },
+      {
+        "file": "datasette/views/table.py",
+        "function": "_parse_next",
+        "names": [
+          "_parse_next"
+        ],
+        "start": 2145,
+        "end": 2157,
+        "lines": [
+          2148,
+          2152,
+          2153,
+          2154,
+          2155,
+          2156,
+          2157
+        ]
+      },
+      {
+        "file": "datasette/views/table.py",
+        "function": "_page_position",
+        "names": [
+          "_page_position"
+        ],
+        "start": 2259,
+        "end": 2290,
+        "lines": [
+          2281,
+          2282,
+          2284,
+          2285,
+          2286
+        ]
+      },
+      {
+        "file": "datasette/views/table.py",
+        "function": "_next_value_and_url",
+        "names": [
+          "_next_value_and_url"
+        ],
+        "start": 2816,
+        "end": 2880,
+        "lines": [
+          2860,
+          2861,
+          2862,
+          2863
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bug-3090",
+    "repo": "simonw/datasette",
+    "title": "Bad JSON array in ?col__in= gives a 500",
+    "body": "The `?col__in=` and `?col__notin=` filters accept a JSON array (per the JSON API docs). An array that's malformed or can't be bound returns a 500 instead of a 400:\n\n```\n/fixtures/facetable.json?state__in=[                  -> 500 Expecting value: line 1 column 2 (char 1)\n/fixtures/facetable.json?state__in=[\"CA\"              -> 500 Expecting ',' delimiter\n/fixtures/facetable.json?state__in=[[1]]              -> 500 Error binding parameter 1: type 'list' is not supported\n/fixtures/facetable.json?state__in=[{\"a\":1}]          -> 500 Error binding parameter 1: type 'dict' is not supported\n/fixtures/facetable.json?pk__in=[9223372036854775808] -> 500 Python int too large to convert to SQLite INTEGER\n```\n\nThe same happens for `__notin` and on the HTML table page. Valid arrays such as `[\"CA\",\"MI\"]`, `[]` and `[true, null]` should keep working. Expected: a 400 with a short message, like other filter errors.",
+    "created_at": "2026-11-19T03:52:07Z",
+    "url": "https://github.com/simonw/datasette/issues/3090",
+    "reporter": "outside",
+    "traceback": false,
+    "removed": "The name of the method that parses the value, and a link to the fix PR.",
+    "base_sha": "a985196c825c56ff160a8c99549b9c9bdc4295bf",
+    "fix_shas": [
+      "ea8d80f27eaac7a36233bb7be07033761226553d"
+    ],
+    "source_files": [
+      "datasette/filters.py"
+    ],
+    "test_files": [
+      "tests/test_filters.py"
+    ],
+    "locations": [
+      {
+        "file": "datasette/filters.py",
+        "function": "InFilter.split_value",
+        "names": [
+          "split_value"
+        ],
+        "start": 283,
+        "end": 287,
+        "lines": [
+          285
+        ]
+      }
+    ]
+  }
+]
