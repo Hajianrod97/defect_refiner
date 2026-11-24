@@ -1,5 +1,7 @@
 # defectrefiner
 
+[![tests](https://github.com/Sazed-code1/defectrefiner/actions/workflows/tests.yml/badge.svg)](https://github.com/Sazed-code1/defectrefiner/actions/workflows/tests.yml)
+
 AI refinement for bug reports. A bug report goes in; a ticket a developer can pick up comes out: where the bug is, down to the lines, the likely cause, a fix approach, and a test plan saying where the regression test goes and what to automate.
 
 **Built with:** Python · LangGraph · LangChain · Claude API · Ollama
