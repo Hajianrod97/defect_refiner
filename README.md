@@ -51,4 +51,4 @@ uv run python -m defectrefiner.web       # review drafts in the browser: approve
 uv run langgraph dev                     # the pipeline in LangGraph Studio: refine_bug, {"bug_id": "bug-393"}
 ```
 
-Claude needs an API key in `ANTHROPIC_API_KEY` or `~/.config/groomroom/anthropic_key`; local models run through [Ollama](https://ollama.com) with `--provider ollama`. Repos are cloned into `~/.cache/groomroom`.
+Claude needs an API key: copy `.env.example` to `.env` and fill it in, or set `ANTHROPIC_API_KEY`; local models run through [Ollama](https://ollama.com) with `--provider ollama`. Repos are cloned into `~/.cache/defectrefiner`.

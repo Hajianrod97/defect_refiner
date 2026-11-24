@@ -1,7 +1,7 @@
 """The repo's code as it was when a ticket was written, or just before a bug
 was fixed: one bare clone per repo, and a read-only worktree per commit, so a
 2022 ticket is groomed against 2022's code. Lives in DEFECTREFINER_CACHE (default
-~/.cache/groomroom).
+~/.cache/defectrefiner).
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 def cache_dir() -> Path:
-    return Path(os.environ.get("DEFECTREFINER_CACHE", "~/.cache/groomroom")).expanduser()  # the old name: the clones stay put
+    return Path(os.environ.get("DEFECTREFINER_CACHE", "~/.cache/defectrefiner")).expanduser()
 
 
 def _git(*args: str | Path) -> str:
